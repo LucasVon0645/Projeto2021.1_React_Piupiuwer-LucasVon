@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const FeedPageContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -14,6 +13,10 @@ export const FeedContent = styled.div`
     flex-direction: column;
     margin-bottom: 5%;
     padding: 12px 22px;
+
+    @media (min-width: 700px) {
+        padding: 24px 40px;
+    }
 
 `
 

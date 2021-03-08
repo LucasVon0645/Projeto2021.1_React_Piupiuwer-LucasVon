@@ -20,6 +20,8 @@ export const MenuContainer = styled.div<MenuContainerProps>`
 
     @media (min-width: 700px) {
         width: 384px;
+        z-index: 0;
+        position: static;
     }
 `
 

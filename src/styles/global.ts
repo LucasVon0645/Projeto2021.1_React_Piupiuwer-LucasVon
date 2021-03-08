@@ -24,7 +24,7 @@ export default createGlobalStyle`
         outline: 0;
     }
 
-    body {
+    body, textarea {
         background-color: var(--blue3);
         color: #000;
         font-family: 'Poppins', sans-serif;
