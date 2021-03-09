@@ -93,6 +93,10 @@ export const PostWriteTextArea = styled.textarea<PostWriteContainerProps>`
     overflow: hidden;
     border: none;
     resize: vertical;
+
+    @media (min-width: 700px) {
+        border-radius: 16px;
+    }
 `
 
 export const InteractionBlockPublish = styled.div`
@@ -178,13 +182,13 @@ export const SpanErrorMessage = styled.span`
     @media (min-width: 700px) {
         left: 0;
         bottom: -56%;
-    }
+    
 
     ::after {
         left: 50%;
         top:-20px;
         border-color:  transparent transparent #E71313 transparent;
-    }
+    }}
 
 `
 

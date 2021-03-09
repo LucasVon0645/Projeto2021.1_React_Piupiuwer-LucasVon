@@ -13,7 +13,7 @@ export default createGlobalStyle`
 
     @media (min-width: 700px) {
     :root{
-        font-size: 75%;
+        font-size: 56%;
     }
 }
 
@@ -24,9 +24,23 @@ export default createGlobalStyle`
         outline: 0;
     }
 
-    body, textarea {
+    body {
+        overflow-x: hidden;
+    }
+
+    body, textarea, input {
         background-color: var(--blue3);
         color: #000;
         font-family: 'Poppins', sans-serif;
+        
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    a:visited {
+        color: #000;
     }
 `

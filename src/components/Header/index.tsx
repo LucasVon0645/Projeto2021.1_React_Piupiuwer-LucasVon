@@ -1,5 +1,6 @@
 import React from 'react';
-import * as S from './styles'
+import * as S from './styles';
+import {Link} from 'react-router-dom';
 
 import useWindownSize from '../../hooks/useWindowSize'
 
@@ -7,21 +8,24 @@ import Logo from '../../assets/icons/logo.svg'
 import SearchIcon from '../../assets/icons/magnifier.svg'
 import LogOutIcon from '../../assets/icons/logout2.svg'
 
+
 interface HeaderProps {
-    toogleMenu: () => void;
+    toogleMenu?: () => void;
+    completeHeader: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({toogleMenu}) => {
+const Header: React.FC<HeaderProps> = ({toogleMenu,completeHeader}) => {
 
     const {width} = useWindownSize()
 
    return (
 
-       <S.HeaderContainer>
+       <S.HeaderContainer completeHeader={completeHeader}>
            <S.InteractionContainer>
-               {width < 700 ? <S.MenuButton onClick={toogleMenu}>☰</S.MenuButton> : <img src={Logo} alt="logo"/>}
+               {width < 700 && completeHeader ? <S.MenuButton onClick={toogleMenu}>☰</S.MenuButton> : <img src={Logo} alt="logo"/>}
                 <S.LogoText>Piupiuwer</S.LogoText>
            </S.InteractionContainer>
+           {completeHeader &&
            <S.LogOutSearchContainer>
                 <S.SearchBar>
                     <S.SearchContainer>
@@ -30,10 +34,12 @@ const Header: React.FC<HeaderProps> = ({toogleMenu}) => {
                     </S.SearchContainer>
                 </S.SearchBar>
                 <S.LogOutContainer>
-                    <img src={LogOutIcon} alt="Sair"></img>
-                    <p>Sair</p>
+                    <Link to="/">
+                        <img src={LogOutIcon} alt="Sair"></img>
+                        <p>Sair</p>
+                    </Link>
                 </S.LogOutContainer>
-            </S.LogOutSearchContainer>
+            </S.LogOutSearchContainer>}
        </S.HeaderContainer>
    );}
 

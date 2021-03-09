@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import PostPiu from '../../components/PostPiu';
 import PublishPiu from '../../components/PublishPiu';
+
+import * as Interfaces from '../../interfaces/index'
+
+import {TokenUserContext} from '../../hooks/TokenUserContextProvider';
 
 
 import {FeedPageContainer, FeedContent, FeedHeader} from './styles'
 
 const Feed: React.FC = () => {
 
+
+    const TokenAndUser = useContext(TokenUserContext)
     const [menuMobileVisible, setMenuMobileVisible] = useState(false);
     const [menuWidth, setMenuWidth] = useState(0);
+    const [userOnline, setUserOnline] = useState(TokenAndUser.user);
 
-
+    console.log(userOnline);
 
     const ToogleMenu = () => {
         setMenuMobileVisible(!menuMobileVisible);
@@ -24,7 +31,7 @@ const Feed: React.FC = () => {
 
     return (
         <>
-        <Header toogleMenu={ToogleMenu}/>
+        <Header toogleMenu={ToogleMenu} completeHeader={true}/>
         <FeedPageContainer>
             <Menu width={menuWidth}/>
             <FeedContent>

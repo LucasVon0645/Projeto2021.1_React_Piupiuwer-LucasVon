@@ -1,12 +1,18 @@
 import React from 'react';
-import Feed from './pages/Feed';
+import Routes from './routes/routes';
 import GlobalStyle from './styles/global';
 
+import TokenUserContextProvider from './hooks/TokenUserContextProvider'
+
 function App() {
+
+
   return (
     <div className="App">
-      <GlobalStyle />
-      <Feed/>
+      <TokenUserContextProvider>
+        <GlobalStyle />
+        <Routes/>
+      </TokenUserContextProvider>
     </div>
   );
 }

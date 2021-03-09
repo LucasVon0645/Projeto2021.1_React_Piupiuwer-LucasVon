@@ -7,6 +7,7 @@ import HomeIcon from './../../assets/icons/botao-home.svg';
 import LogOutIcon from './../../assets/icons/logout.svg';
 import FriendsIcon from './../../assets/icons/amigos.svg';
 import PasswordIcon from './../../assets/icons/padlock.svg'
+import { Link } from 'react-router-dom';
 
 interface MenuProps {
     width: number;
@@ -26,16 +27,18 @@ const Menu: React.FC<MenuProps> = ({width}) => {
         </ProfileMenuContainer>
 
         <MenuItemsContainer>
-
+            
             <MenuItem>
                 <img src={HomeIcon} alt="Feed"></img>
                 <MenuItemText>Feed</MenuItemText>
             </MenuItem>
 
-            <MenuItem style={{marginLeft: '1rem'}}>
-                <img src={LogOutIcon} alt="Sair"></img>
-                <MenuItemText>Sair</MenuItemText>
-            </MenuItem>
+            <Link to="/">
+                <MenuItem style={{marginLeft: '0.5rem'}}>
+                    <img src={LogOutIcon} alt="Sair"></img>
+                    <MenuItemText>Sair</MenuItemText>
+                </MenuItem>
+            </Link>
 
             <MenuItem>
                 <img src={FriendsIcon} alt="amigos"></img>

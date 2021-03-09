@@ -33,6 +33,14 @@ export const ProfileImageContainerPost = styled.div`
     position: relative;
     overflow: hidden;
     background-color: #BBB;
+
+    @media (min-width: 700px) {
+        width: 80px;
+        height: 80px;
+        border-radius: 44px;
+    }
+
+    
 `
 
 export const PostInformation = styled.div`

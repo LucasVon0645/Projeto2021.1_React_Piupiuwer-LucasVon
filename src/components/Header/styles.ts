@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export const HeaderContainer = styled.div`
+interface HeaderContainerProps {
+    completeHeader: boolean;
+}
+
+export const HeaderContainer = styled.div<HeaderContainerProps>`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -8,9 +12,12 @@ export const HeaderContainer = styled.div`
     height: 10rem;
     width: 100%;
     background-color: var(--blue1);
-    position: fixed;
-    top: 0;
-    z-index: 1;
+    ${props => {
+        if(props.completeHeader)
+            return "position: fixed;top: 0;z-index: 1;"
+        else
+            return "";
+    }}
 `
 
 export const InteractionContainer = styled.div`
@@ -22,7 +29,7 @@ export const InteractionContainer = styled.div`
     height: 100%;
 
     img {
-        height: 80px;
+        height: 64%;
         width: auto;
         margin: 0 8px;
     }
@@ -48,12 +55,12 @@ export const LogoText = styled.h1`
 `
 
 export const SearchBar = styled.div`
-    width: 180px;
+    width: 172px;
     height: 100%;
     background-color: var(--blue4);
-    border-radius: 16px;
+    border-radius: 22px;
     margin-left: 16px;
-    margin-right: 12px;
+    margin-right: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,7 +81,7 @@ export const SearchBar = styled.div`
 
 export const SearchContainer = styled.div`
     height: 50%;
-    width: 80%;
+    width: 88%;
     position: relative;
     display: inline-block;
 
@@ -131,6 +138,12 @@ export const LogOutContainer = styled.div`
         height: 100%;
         cursor: pointer;
 
+    }
+
+    a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     p {
