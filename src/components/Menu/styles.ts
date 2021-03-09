@@ -6,7 +6,6 @@ interface MenuContainerProps {
 
 export const MenuContainer = styled.div<MenuContainerProps>`
     width: ${props => props.width}px;
-    height: 100vh;
     background-color: var(--blue2);
     transition: 0.5s;
     overflow-x: hidden;
@@ -15,13 +14,14 @@ export const MenuContainer = styled.div<MenuContainerProps>`
     align-items: flex-start;
     justify-content: flex-start;
     z-index: 1;
-    position: fixed;
+    position: sticky;
+    top: 10rem;
+    height: calc(100vh - 10rem);
     
 
     @media (min-width: 700px) {
         width: 384px;
         z-index: 0;
-        position: static;
     }
 `
 

@@ -9,14 +9,16 @@ interface CounterProps {
 }
 
 export const PublishPiuContainer = styled.div`
-    width: 100%;
+    width: 90vw;
     background-color: #FFF;
     padding: 8px 16px;
     border-radius: 16px;
     margin-top: 8px;
+    margin-left: 5vw;
 
-    @media (min-width: 500px) {
+    @media (min-width: 700px) {
         padding: 32px;
+        width: 60vw;
     }
 
 `

@@ -3,19 +3,19 @@ import styled from 'styled-components';
 export const FeedPageContainer = styled.div`
     display: flex;
     flex-direction: row;
-    overflow-x: hidden;
+    margin-top: 10rem;
 `
 
 export const FeedContent = styled.div`
     height: 100%;
-    width: 100%;
     display: flex;
     flex-direction: column;
     margin-bottom: 5%;
-    padding: 12px 22px;
+    transition: margin-left .5s;
+    overflow-x: hidden;
 
     @media (min-width: 700px) {
-        padding: 24px 40px;
+        padding-top: 24px;
     }
 
 `
@@ -28,4 +28,5 @@ export const FeedHeader = styled.h2`
     letter-spacing: 0em;
     color: var(--blue1);
     text-decoration: underline;
+    margin-left: 5vw;
 `

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
+import PostPiu from '../../components/PostPiu';
 import PublishPiu from '../../components/PublishPiu';
 
 
-import useWindownSize from '../../hooks/useWindowSize'
 import {FeedPageContainer, FeedContent, FeedHeader} from './styles'
 
 const Feed: React.FC = () => {
@@ -17,7 +17,7 @@ const Feed: React.FC = () => {
     const ToogleMenu = () => {
         setMenuMobileVisible(!menuMobileVisible);
         if (menuWidth === 0) {
-            setMenuWidth(280);}
+            setMenuWidth(700);}
         else {
             setMenuWidth(0);}
     }
@@ -30,6 +30,10 @@ const Feed: React.FC = () => {
             <FeedContent>
                 <FeedHeader>Feed</FeedHeader>
                 <PublishPiu />
+                <PostPiu myPost={true}/>
+                <PostPiu myPost={true}/>
+                <PostPiu myPost={true}/>
+                <PostPiu myPost={true}/>
             </FeedContent>
         </FeedPageContainer>
         </>
