@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useMemo, useCallback } from 'react';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import PostPiu from '../../components/PostPiu';
@@ -18,21 +18,42 @@ const Feed: React.FC = () => {
     const {userData} = useContext(AuthContext)
     const [menuMobileVisible, setMenuMobileVisible] = useState(false);
     const [menuWidth, setMenuWidth] = useState(0);
-    const [nameOfTheUser, setNameOfTheUser] = useState("");
+    const [arrayOfPius, setArrayOfPius] = useState([] as JSX.Element[]);
     const {user, token} = userData;
+    let nameOfTheUser = "";
 
-    const config = {
-        headers: { Authorization: `Bearer ${token}` }
+    if (user) {
+        nameOfTheUser = user.first_name + " " + user.last_name;
     }
 
-    
-    if (user) setNameOfTheUser(user.first_name + " " + user.last_name);
+    const handleCreateAllPius = (PiusData: Interfaces.Piu[]) => {
+        return PiusData.map( (piu) => {
+            return (
+                <PostPiu myPost={false} text={piu.text} key={piu.id}
+                name={piu.user.first_name + " " + piu.user.last_name}
+                userName={piu.user.username}
+                photo={piu.user.photo}/>
+            )
+        })
+    }
 
-    const getAllPius = () => {
-        api.get('/pius', config).then(console.log)
-    };
+    useEffect(() => {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        }
 
-    console.log(user);
+        const getAllPius = () => {
+            api.get('/pius', config)
+            .then(({data}) => {
+                setArrayOfPius(handleCreateAllPius(data));
+                }).catch(() => alert('Erro na requisição de Pius'));
+        };
+
+        getAllPius();
+
+    }, [token]);
+
+
 
     const ToogleMenu = () => {
         setMenuMobileVisible(!menuMobileVisible);
@@ -42,7 +63,7 @@ const Feed: React.FC = () => {
             setMenuWidth(0);}
     }
 
-    getAllPius();
+
 
     return (
         <>
@@ -52,6 +73,7 @@ const Feed: React.FC = () => {
             <FeedContent>
                 <FeedHeader>Feed</FeedHeader>
                 <PublishPiu />
+                {arrayOfPius}
             </FeedContent>
         </FeedPageContainer>
         </>

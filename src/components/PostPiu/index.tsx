@@ -12,9 +12,10 @@ interface PostPiuProps {
     name: string,
     userName: string,
     text: string,
+    photo: string
 }
 
-const PostPiu: React.FC<PostPiuProps> = ({myPost, name, userName, text}) => {
+const PostPiu: React.FC<PostPiuProps> = ({myPost, name, userName, text, photo}) => {
 
     const [highlighted, setHightlighted] = useState(false);
 
@@ -26,14 +27,14 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, name, userName, text}) => {
     
     <S.PostContainer>
         <S.ProfileInfoContainer>
-            <S.ProfileImageContainerPost />
+            <S.ProfileImageContainerPost><img src={photo} alt="user"/></S.ProfileImageContainerPost>
             <S.PostInformation>
-                <S.NameUser>Lucas Von</S.NameUser>
-                <S.UserMoreInformation>@LucasVon - 8/3/2021 16h52min</S.UserMoreInformation>
+                <S.NameUser>{name}</S.NameUser>
+                <S.UserMoreInformation>{'@' + userName}</S.UserMoreInformation>
             </S.PostInformation>
         </S.ProfileInfoContainer>
         <S.PostContent>
-            Lucas
+            {text}
         </S.PostContent>
         <S.PostInteractionContainer myPost={myPost}>
             {myPost &&

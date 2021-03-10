@@ -34,11 +34,22 @@ export const ProfileImageContainerPost = styled.div`
     overflow: hidden;
     background-color: #BBB;
 
+    img {
+        position: absolute;
+        height: 50px;
+        width: auto;
+        margin-left: -25%;
+    }
+
     @media (min-width: 700px) {
         width: 80px;
         height: 80px;
         border-radius: 44px;
-    }
+
+        img {
+        height: 80px;
+    }}
+
 
     
 `
