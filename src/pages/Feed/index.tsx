@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useContext} from 'react';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import PostPiu from '../../components/PostPiu';
@@ -26,10 +26,10 @@ const Feed: React.FC = () => {
         nameOfTheUser = user.first_name + " " + user.last_name;
     }
 
+    console.log(user);
+
 
     useEffect(() => {
-
-        console.log("oi")
 
         const config = {
             headers: { Authorization: `Bearer ${token}` }
@@ -40,7 +40,7 @@ const Feed: React.FC = () => {
                 let config = false;
                 if (piu.user.id === user.id) config = true;
                 return (
-                    <PostPiu myPost={config} piuInformation={piu}/>
+                    <PostPiu myPost={config} piuInformation={piu} key={piu.id}/>
                 )
             })
         }
@@ -53,9 +53,12 @@ const Feed: React.FC = () => {
                 alert('Erro na requisição de Pius');}
         };
 
+
         getAllPius();
 
-    }, [token, user]);
+    }, [token, user.id]);
+
+    console.log(token);
  
 
     const ToogleMenu = () => {

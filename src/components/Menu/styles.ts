@@ -15,7 +15,7 @@ export const MenuContainer = styled.div<MenuContainerProps>`
     justify-content: flex-start;
     z-index: 1;
     position: sticky;
-    top: 9rem;
+    top: 10rem;
     height: calc(100vh - 9rem);
     
 

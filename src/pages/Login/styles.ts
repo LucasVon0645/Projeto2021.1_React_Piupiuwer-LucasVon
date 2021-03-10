@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
+
 export const LoginContent = styled.div`
-    margin-top: 2rem;
-    width: 100vw;
     display: flex;
+    height: calc(100vh - 10rem);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -13,10 +13,9 @@ export const LoginContent = styled.div`
     }
 
     @media (min-width: 900px) {
-        margin-top: 1rem;
         flex-direction: row;
         justify-content: space-evenly;
-        align-items: flex-start;
+        align-items: flex-center;
 
         img {
         margin-top: 16px;
@@ -27,9 +26,10 @@ export const LoginContent = styled.div`
 
 
 
-    @media (min-width: 1100px) {
+    @media (min-width: 1500px) {
         img {
-        width: 600px;}
+        width: 800px;
+        margin-top: 1vh;}
     }
 
 
@@ -50,7 +50,7 @@ export const GainContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top:  16px;
+    margin-top:  8px;
     
     p {
         font-style: normal;
@@ -77,10 +77,6 @@ export const LandingContent = styled.div`
     flex-direction: column;
     justify-content: flex-start;
 
-    @media (min-width: 900px) {
-        margin-top: 1rem;
-    }
-
 `
 
 export const Title = styled.h2`
@@ -90,10 +86,16 @@ export const Title = styled.h2`
     text-align: center;
     color: #FFFFFF;
     font-size: 2.5rem;
+    margin-bottom: 32px;
 
     @media (min-width: 700px) {
         font-size: 3rem;
 
+    }
+
+    @media (min-width: 1500px) {
+        font-size: 3.5rem;
+        margin-bottom: 1vh;
     }
 
 
@@ -103,13 +105,18 @@ export const LoginCard = styled.div`
     width: 90%;
     background-color: #FFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 40px;
-    margin-top: 2rem;
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 32px;
     max-width: 416px;
+
+    @media (min-width: 700px) {
+        font-size: 1rem;
+
+    }
+
+
 `
 
 export const LoginCardTitle = styled.h3`
@@ -119,6 +126,12 @@ export const LoginCardTitle = styled.h3`
     letter-spacing: -0.02em;
     margin-top: 16px;
     margin-bottom: 16px;
+
+    @media (min-width: 1500px) {
+        margin-top: 32px;
+        margin-bottom: 32px;
+        font-size: 4.2rem;
+    }
 `
 
 export const LoginForm = styled.form`
@@ -127,18 +140,36 @@ export const LoginForm = styled.form`
     align-items: center;
 `
 
-export const ForgotPasswordText = styled.p`
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.5rem;
+export const CredentialsContainer = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     width: 300px;
-    cursor: pointer;
-    margin-bottom: 16px;
+    position: relative;
 
     @media (min-width: 700px) {
         width: 344px;
 
     }
+
+`
+
+export const CredentialsWarningSpan = styled.span`
+    font-size: 1.5rem;
+    color: #E71313;
+    font-weight: normal;
+    letter-spacing: -0.02em;
+    position: absolute;
+    right: 8px;
+    top: 0;
+`
+
+export const ForgotPasswordText = styled.p`
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-bottom: 16px;
 
 `
 
@@ -179,11 +210,15 @@ export const AnotherAcountText = styled.p`
     font-size: 2rem;
     letter-spacing: -0.01em;
     width: 300px;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 
     @media (min-width: 700px) {
         width: 344px;
 
+    }
+
+    @media (min-width: 1500px) {
+        margin-top: 8px;
     }
 `
 
@@ -196,9 +231,11 @@ export const AnotherAccountLinksContainer = styled.div`
 
 
     img {
+        margin: 0;
         cursor: pointer;
         height: 64px;
         width: 64px;
+        display: flex;
     }
 
 `
@@ -208,6 +245,10 @@ export const SignInForm = styled.form`
     align-items: center;
     flex-direction: column;
     margin-top: 16px;
+
+    @media (min-width: 1500px) {
+        margin-top: 36px;
+    }
 `
 
 export const SignInLabel = styled.label`
@@ -220,6 +261,10 @@ export const SignInLabel = styled.label`
     @media (min-width: 700px) {
         width: 344px;
 
+    }
+
+    @media (min-width: 1500px) {
+        margin-bottom: 8px;
     }
 `
 
@@ -251,6 +296,10 @@ export const ButtonSignIn = styled.button`
         height: 32px;
         font-size: 1.5rem;
 
+    }
+
+    @media (min-width: 1500px) {
+        margin-bottom: 64px;
     }
 
 `

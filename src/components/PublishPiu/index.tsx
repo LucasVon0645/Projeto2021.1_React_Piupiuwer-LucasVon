@@ -31,6 +31,7 @@ const PublishPiu: React.FC = () => {
             setEmptyPost(false);
             setNumberOfChars(0);}
    }
+
     
     const PostMyPiu = async (text: string) => {
 
@@ -42,7 +43,8 @@ const PublishPiu: React.FC = () => {
     const handlePublishPiu = (event: FormEvent) => {
         event.preventDefault();
         if (numberOfChars > 0) {
-            if (numberOfChars < 141) PostMyPiu(message)}
+            if (numberOfChars < 141) {
+                PostMyPiu(message);}}
         else setEmptyPost(true)
 
    }

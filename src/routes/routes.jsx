@@ -1,7 +1,7 @@
-import React from 'react'
 import {BrowserRouter, Route} from 'react-router-dom'
 import Feed from '../pages/Feed'
 import Login from '../pages/Login'
+import Profile from '../pages/ProfilePage'
 
 
 function Routes () {
@@ -10,6 +10,7 @@ function Routes () {
         <BrowserRouter>
             <Route path="/" exact component={Login} />
             <Route path="/feed" component={Feed}/>
+            <Route path="/profile" component={Profile}/>
         </BrowserRouter>
 
     )

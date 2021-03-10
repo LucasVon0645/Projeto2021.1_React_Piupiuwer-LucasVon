@@ -13,11 +13,13 @@ import LandingImage from '../../assets/images/LandingImage.svg';
 
 import {AuthContext} from '../../hooks/AuthProvider'
 import { useHistory } from 'react-router';
+import useWindowSize from '../../hooks/useWindowSize';
 
 
 const Login: React.FC = () => {
 
    const [email, setEmail] = useState("");
+   const [loginFailed, setLoginFailed] = useState(false);
    const [password, setPassword] = useState("");
    const {login} = useContext(AuthContext);
    const history = useHistory();
@@ -26,8 +28,10 @@ const Login: React.FC = () => {
       event.preventDefault();
       const result = await login({email, password});
       if (result === 1) history.push('/feed');
-      else alert('Erro no Login');
+      else setLoginFailed(true);
    }
+
+   const {height} = useWindowSize();
 
 
    return (
@@ -36,7 +40,7 @@ const Login: React.FC = () => {
         <Header completeHeader={false}></Header>
         <S.LoginContent>
            <S.LandingContent>
-            <S.Title>Bem vindo! <br/> Venha se conectar com a galera!</S.Title>
+            {height >= 700 && <S.Title>Bem vindo! <br/> Venha se conectar com a galera!</S.Title>}
             <img src={LandingImage} alt="Piupiuwer"></img>
             <S.MainGainsContainer>
                <S.GainContainer>
@@ -56,7 +60,10 @@ const Login: React.FC = () => {
                      autoCorrect="off" autoCapitalize="off" spellCheck="false"
                      onChange={(email) => setEmail(email.target.value)}/>
                      <Input placeholder="Senha" type="password" onChange={(password) => setPassword(password.target.value)}/>
-                     <S.ForgotPasswordText>Esqueceu a senha?</S.ForgotPasswordText>
+                     <S.CredentialsContainer>
+                        <S.ForgotPasswordText>Esqueceu a senha?</S.ForgotPasswordText>
+                        {loginFailed && <S.CredentialsWarningSpan>* Senha ou email incorreto</S.CredentialsWarningSpan>}
+                     </S.CredentialsContainer>
                      <S.ButtonLogin type="submit">entrar</S.ButtonLogin>
                      <S.AnotherAcountText>Utilizar outra conta</S.AnotherAcountText>
                      <S.AnotherAccountLinksContainer>

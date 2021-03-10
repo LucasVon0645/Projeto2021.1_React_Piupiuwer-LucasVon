@@ -14,8 +14,8 @@ export default createGlobalStyle`
     @media (min-width: 700px) {
     :root{
         font-size: 56%;
-    }
-}
+    }}
+
 
     * {
         margin: 0;

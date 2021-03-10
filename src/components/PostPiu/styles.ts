@@ -78,6 +78,7 @@ export const UserMoreInformation = styled.p`
 
 export const PostContent = styled.p`
     font-style: normal;
+    margin-top: 16px;
     font-weight: normal;
     font-size: 2rem;
     line-height: 3.2rem;
@@ -107,7 +108,8 @@ export const EditDeleteContainer = styled.div`
     img {
         height: auto;
         width: 24px;
-        margin-left: 3%;}
+        margin-left: 3%;
+        cursor: pointer;}
 
     span {
         font-style: normal;
@@ -130,6 +132,7 @@ export const LikeHighlightContainer = styled.div`
         height: 24px;
         width: 24px;
         margin-left: 8px;
+        cursor: pointer;
     }
 `
 export const LikesContainer = styled.div`

@@ -18,7 +18,9 @@ export const AuthContext = createContext({} as {
         user: Interfaces.User
     }
     login: ({ email, password }: Credentials) => Promise<1 | 0>,
-    logout: () => void
+    logout: () => void,
+    updateUser: () => Promise<void>
+
 })
 
 const AuthProvider: React.FC = ({children}) => {
@@ -62,9 +64,20 @@ const AuthProvider: React.FC = ({children}) => {
         setUserData({} as AuthState)
     }
 
+    const updateUser = async () => {
+
+        const token = userData.token;
+        const username = userData.user.username
+        const response = await api.get('/users?username=' + username, {headers: { Authorization: `Bearer ${token}` }})
+        const user: Interfaces.User = response.data[0]
+        localStorage.setItem('@Project:user', JSON.stringify(user))
+        setUserData({token, user});
+    }
+
+
     return (
 
-        <AuthContext.Provider value={{userData, login, logout}}>
+        <AuthContext.Provider value={{userData, login, logout, updateUser}}>
             {children}
         </AuthContext.Provider>
        

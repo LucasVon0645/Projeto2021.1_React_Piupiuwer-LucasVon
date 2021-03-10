@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import * as S from './styles'
 
 import EditIcon from '../../assets/icons/editar.svg'
+import SaveIcon from '../../assets/icons/salvar.svg'
 import TrashIcon from '../../assets/icons/trash.svg'
 import LikeIcon from '../../assets/icons/like.svg'
 import HighlightIcon from '../../assets/icons/highlight.svg'
 import HighlightedIcon from '../../assets/icons/star_highlighted.svg'
 import { Piu } from '../../interfaces';
+import { AuthContext } from '../../hooks/AuthProvider';
+import api from '../../services/api';
 
 interface PostPiuProps {
     myPost: boolean;
@@ -15,12 +18,79 @@ interface PostPiuProps {
 
 const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
 
-    const [highlighted, setHightlighted] = useState(false);
+    const [editableModeOn, setEditableModeOn] = useState(false);
 
-    const name = piuInformation.user.first_name + " " + piuInformation.user.last_name
+    const name = piuInformation.user.first_name + " " + piuInformation.user.last_name;
 
-    function ToogleHighlight () {
-        setHightlighted(!highlighted)
+    const {userData, updateUser} = useContext(AuthContext)
+    const {token} = userData;
+
+    const piu_id = piuInformation.id;
+
+    const handleLikePiu = async () => {
+
+        const response = await api.post('/pius/like', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
+        console.log(response);
+        window.location.reload();
+    }
+
+    const CheckIfFavoriteOn = () => {
+        let result = false;
+        userData.user.favorites.forEach((element) => {
+            if (element.id === piuInformation.id){
+                result = true;
+            }   
+        })
+
+        return result;
+    }
+
+    const handleFavoritePiu = async () => {
+
+        console.log(CheckIfFavoriteOn());
+
+        if (!CheckIfFavoriteOn()) {
+
+            console.log('oi');
+
+            const response = await api.post('/pius/favorite', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
+            console.log(response);
+        }
+
+        else {
+
+            console.log('oi2');
+
+            const response = await api.post('/pius/unfavorite', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
+            console.log(response);
+        }
+
+        updateUser();
+
+    }
+
+    console.log("todos");
+
+
+    const getTimeOfThePiu = () => {
+        const date = new Date(piuInformation.updated_at);
+        const day = String(date.getDate());
+        const month = String(date.getMonth());
+        const year = String(date.getFullYear());
+        let hour = String(date.getHours());
+        let min = String(date.getMinutes());
+        if (hour.length === 1) hour = '0' + hour;
+        if (min.length === 1) min = '0' + min; 
+
+        return day + "/" + month + "/" + year + " " + hour + "h" + min + "min";
+        
+    }
+
+
+    const handleDeletePiu = async () => {
+        const response = await api.delete('/pius',  {headers: { Authorization: `Bearer ${token}` }, data: {piu_id}});
+        console.log(response);
+        window.location.reload();
     }
 
     return (
@@ -30,7 +100,7 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
             <S.ProfileImageContainerPost><img src={piuInformation.user.photo} alt="user"/></S.ProfileImageContainerPost>
             <S.PostInformation>
                 <S.NameUser>{name}</S.NameUser>
-                <S.UserMoreInformation>{'@' + piuInformation.user.username}</S.UserMoreInformation>
+                <S.UserMoreInformation>{'@' + piuInformation.user.username + " - " + getTimeOfThePiu()}</S.UserMoreInformation>
             </S.PostInformation>
         </S.ProfileInfoContainer>
         <S.PostContent>
@@ -39,16 +109,16 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
         <S.PostInteractionContainer myPost={myPost}>
             {myPost &&
                 <S.EditDeleteContainer>
-                <img src={EditIcon} alt="Edit" />
-                <span>Salvar</span>
-                <img src={TrashIcon} alt="Delete"/>
+                <img src={editableModeOn ? SaveIcon : EditIcon} alt="Edit" onClick={() => setEditableModeOn(!editableModeOn)}/>
+                {editableModeOn && <span>Salvar</span>}
+                <img src={TrashIcon} alt="Delete" onClick={() => handleDeletePiu()}/>
             </S.EditDeleteContainer>}
             <S.LikeHighlightContainer>
                 <S.LikesContainer>
                     <p>{piuInformation.likes.length}</p>
-                    <img src={LikeIcon} alt="like"/>
+                    <img src={LikeIcon} alt="like" onClick={() => handleLikePiu()}/>
                 </S.LikesContainer>
-                <img src={highlighted ? HighlightedIcon : HighlightIcon} alt={"Highlight"} onClick={ToogleHighlight}></img>
+                <img src={CheckIfFavoriteOn() ? HighlightedIcon : HighlightIcon} alt={"Highlight"} onClick={() => handleFavoritePiu()}></img>
             </S.LikeHighlightContainer>
         </S.PostInteractionContainer>
     </S.PostContainer>
