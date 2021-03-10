@@ -38,7 +38,6 @@ export const ProfileImageContainerPost = styled.div`
         position: absolute;
         height: 50px;
         width: auto;
-        margin-left: -25%;
     }
 
     @media (min-width: 700px) {

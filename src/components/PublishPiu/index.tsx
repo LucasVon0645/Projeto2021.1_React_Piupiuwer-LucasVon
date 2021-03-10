@@ -3,15 +3,17 @@ import * as S from './styles'
 
 import BirdIcon from '../../assets/icons/passaro-cantando-com-notas-musicais.svg'
 import {AuthContext} from '../../hooks/AuthProvider';
+import api from '../../services/api';
 
 const PublishPiu: React.FC = () => {
 
    const TextAreaElement = useRef<HTMLTextAreaElement>(null);
 
    const {userData} = useContext(AuthContext);
-   const {user} = userData;
+   const {user, token} = userData;
    const [numberOfChars, setNumberOfChars] = useState(0);
    const [emptyPost, setEmptyPost] = useState(false);
+   const [message, setMessage] = useState("");
    
    const showNumberOfChars = (event: FormEvent) => {
     
@@ -29,10 +31,18 @@ const PublishPiu: React.FC = () => {
             setEmptyPost(false);
             setNumberOfChars(0);}
    }
+    
+    const PostMyPiu = async (text: string) => {
+
+        const response = await api.post('/pius', {text}, {headers: { Authorization: `Bearer ${token}` }})
+        console.log(response);
+
+    }
 
     const handlePublishPiu = (event: FormEvent) => {
         event.preventDefault();
-        if (numberOfChars > 0) console.log('Postar');
+        if (numberOfChars > 0) {
+            if (numberOfChars < 141) PostMyPiu(message)}
         else setEmptyPost(true)
 
    }
@@ -48,7 +58,8 @@ const PublishPiu: React.FC = () => {
                 <S.PublishField>
                     <S.PhotoPublishContainer><img src={user ? user.photo : ""} alt="user" /></S.PhotoPublishContainer>
                     <S.PostWriteContainer>
-                        <S.PostWriteTextArea ref={TextAreaElement} placeholder="Digite um novo Piu" onInput={(event) => showNumberOfChars(event)} numberOfChars={numberOfChars}></S.PostWriteTextArea>
+                        <S.PostWriteTextArea ref={TextAreaElement} placeholder="Digite um novo Piu" onInput={(event) => showNumberOfChars(event)} 
+                        numberOfChars={numberOfChars} onChange={(event) => setMessage(event.target.value)}></S.PostWriteTextArea>
                         {numberOfChars > 140 && 
                             <S.SpanErrorMessage>O limite máximo de <br />caracteres é 140</S.SpanErrorMessage>}
                         {emptyPost && 

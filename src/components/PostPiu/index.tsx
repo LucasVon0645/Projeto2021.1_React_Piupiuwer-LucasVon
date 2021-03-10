@@ -6,18 +6,18 @@ import TrashIcon from '../../assets/icons/trash.svg'
 import LikeIcon from '../../assets/icons/like.svg'
 import HighlightIcon from '../../assets/icons/highlight.svg'
 import HighlightedIcon from '../../assets/icons/star_highlighted.svg'
+import { Piu } from '../../interfaces';
 
 interface PostPiuProps {
-    myPost: boolean,
-    name: string,
-    userName: string,
-    text: string,
-    photo: string
+    myPost: boolean;
+    piuInformation: Piu;
 }
 
-const PostPiu: React.FC<PostPiuProps> = ({myPost, name, userName, text, photo}) => {
+const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
 
     const [highlighted, setHightlighted] = useState(false);
+
+    const name = piuInformation.user.first_name + " " + piuInformation.user.last_name
 
     function ToogleHighlight () {
         setHightlighted(!highlighted)
@@ -27,14 +27,14 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, name, userName, text, photo}) 
     
     <S.PostContainer>
         <S.ProfileInfoContainer>
-            <S.ProfileImageContainerPost><img src={photo} alt="user"/></S.ProfileImageContainerPost>
+            <S.ProfileImageContainerPost><img src={piuInformation.user.photo} alt="user"/></S.ProfileImageContainerPost>
             <S.PostInformation>
                 <S.NameUser>{name}</S.NameUser>
-                <S.UserMoreInformation>{'@' + userName}</S.UserMoreInformation>
+                <S.UserMoreInformation>{'@' + piuInformation.user.username}</S.UserMoreInformation>
             </S.PostInformation>
         </S.ProfileInfoContainer>
         <S.PostContent>
-            {text}
+            {piuInformation.text}
         </S.PostContent>
         <S.PostInteractionContainer myPost={myPost}>
             {myPost &&
@@ -45,7 +45,7 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, name, userName, text, photo}) 
             </S.EditDeleteContainer>}
             <S.LikeHighlightContainer>
                 <S.LikesContainer>
-                    <p>0</p>
+                    <p>{piuInformation.likes.length}</p>
                     <img src={LikeIcon} alt="like"/>
                 </S.LikesContainer>
                 <img src={highlighted ? HighlightedIcon : HighlightIcon} alt={"Highlight"} onClick={ToogleHighlight}></img>

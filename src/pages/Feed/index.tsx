@@ -26,34 +26,37 @@ const Feed: React.FC = () => {
         nameOfTheUser = user.first_name + " " + user.last_name;
     }
 
-    const handleCreateAllPius = (PiusData: Interfaces.Piu[]) => {
-        return PiusData.map( (piu) => {
-            return (
-                <PostPiu myPost={false} text={piu.text} key={piu.id}
-                name={piu.user.first_name + " " + piu.user.last_name}
-                userName={piu.user.username}
-                photo={piu.user.photo}/>
-            )
-        })
-    }
 
     useEffect(() => {
+
+        console.log("oi")
+
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         }
 
-        const getAllPius = () => {
-            api.get('/pius', config)
-            .then(({data}) => {
-                setArrayOfPius(handleCreateAllPius(data));
-                }).catch(() => alert('Erro na requisição de Pius'));
+        const handleCreateAllPius = (PiusData: Interfaces.Piu[]) => {
+            return PiusData.map( (piu) => {
+                let config = false;
+                if (piu.user.id === user.id) config = true;
+                return (
+                    <PostPiu myPost={config} piuInformation={piu}/>
+                )
+            })
+        }
+
+        const getAllPius = async () => {
+            try {
+                const {data} = await api.get('/pius', config)
+                setArrayOfPius(handleCreateAllPius(data));}
+            catch {
+                alert('Erro na requisição de Pius');}
         };
 
         getAllPius();
 
-    }, [token]);
-
-
+    }, [token, user]);
+ 
 
     const ToogleMenu = () => {
         setMenuMobileVisible(!menuMobileVisible);
@@ -62,6 +65,7 @@ const Feed: React.FC = () => {
         else {
             setMenuWidth(0);}
     }
+
 
 
 
