@@ -45,11 +45,24 @@ export const ProfileImageMenu = styled.div`
     width: 80px;
     background-color: #BBB;
     border-radius: 40px;
+    position: relative;
+    overflow: hidden;
+
+    img {
+        height: 80px;
+        width: 80px;
+        margin-right: -25%;
+    }
 
     @media (min-width: 700px) {
         height: 100px;
         width: 100px;
         border-radius: 50px;
+
+        img {
+            height: 100px;
+            width: 100px;
+            margin-right: -25%;}
     }
 
 `

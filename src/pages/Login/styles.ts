@@ -113,7 +113,6 @@ export const LoginCard = styled.div`
 `
 
 export const LoginCardTitle = styled.h3`
-    font-family: Poppins;
     font-style: normal;
     font-weight: 800;
     font-size: 4rem;

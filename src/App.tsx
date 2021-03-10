@@ -1,18 +1,17 @@
-import React from 'react';
+import AuthProvider from './hooks/AuthProvider';
 import Routes from './routes/routes';
 import GlobalStyle from './styles/global';
 
-import TokenUserContextProvider from './hooks/TokenUserContextProvider'
 
 function App() {
 
 
   return (
     <div className="App">
-      <TokenUserContextProvider>
+      <AuthProvider>
         <GlobalStyle />
         <Routes/>
-      </TokenUserContextProvider>
+      </AuthProvider>
     </div>
   );
 }

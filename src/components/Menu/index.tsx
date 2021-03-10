@@ -11,17 +11,19 @@ import { Link } from 'react-router-dom';
 
 interface MenuProps {
     width: number;
+    nameOfTheUser: string,
+    imageLink: string
 }
 
-const Menu: React.FC<MenuProps> = ({width}) => {
+const Menu: React.FC<MenuProps> = ({width, nameOfTheUser, imageLink}) => {
 
    return (
     <MenuContainer width={width}>
 
         <ProfileMenuContainer>
-            <ProfileImageMenu />
+            <ProfileImageMenu><img src={imageLink} alt="user"/></ProfileImageMenu>
             <ProfileInfoMenu>
-                <ProfileNameLinkMenu>Lucas Von</ProfileNameLinkMenu>
+                <ProfileNameLinkMenu>{nameOfTheUser}</ProfileNameLinkMenu>
                 <ProfileLinkMenu>Ir para o Perfil</ProfileLinkMenu>
             </ProfileInfoMenu>
         </ProfileMenuContainer>

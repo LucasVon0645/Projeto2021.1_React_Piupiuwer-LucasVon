@@ -8,10 +8,13 @@ import HighlightIcon from '../../assets/icons/highlight.svg'
 import HighlightedIcon from '../../assets/icons/star_highlighted.svg'
 
 interface PostPiuProps {
-    myPost: boolean
+    myPost: boolean,
+    name: string,
+    userName: string,
+    text: string,
 }
 
-const PostPiu: React.FC<PostPiuProps> = ({myPost}) => {
+const PostPiu: React.FC<PostPiuProps> = ({myPost, name, userName, text}) => {
 
     const [highlighted, setHightlighted] = useState(false);
 

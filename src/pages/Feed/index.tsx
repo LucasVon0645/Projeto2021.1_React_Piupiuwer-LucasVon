@@ -6,20 +6,33 @@ import PublishPiu from '../../components/PublishPiu';
 
 import * as Interfaces from '../../interfaces/index'
 
-import {TokenUserContext} from '../../hooks/TokenUserContextProvider';
+import {AuthContext} from '../../hooks/AuthProvider';
 
 
 import {FeedPageContainer, FeedContent, FeedHeader} from './styles'
+import api from '../../services/api';
 
 const Feed: React.FC = () => {
 
 
-    const TokenAndUser = useContext(TokenUserContext)
+    const {userData} = useContext(AuthContext)
     const [menuMobileVisible, setMenuMobileVisible] = useState(false);
     const [menuWidth, setMenuWidth] = useState(0);
-    const [userOnline, setUserOnline] = useState(TokenAndUser.user);
+    const [nameOfTheUser, setNameOfTheUser] = useState("");
+    const {user, token} = userData;
 
-    console.log(userOnline);
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    }
+
+    
+    if (user) setNameOfTheUser(user.first_name + " " + user.last_name);
+
+    const getAllPius = () => {
+        api.get('/pius', config).then(console.log)
+    };
+
+    console.log(user);
 
     const ToogleMenu = () => {
         setMenuMobileVisible(!menuMobileVisible);
@@ -29,18 +42,16 @@ const Feed: React.FC = () => {
             setMenuWidth(0);}
     }
 
+    getAllPius();
+
     return (
         <>
         <Header toogleMenu={ToogleMenu} completeHeader={true}/>
         <FeedPageContainer>
-            <Menu width={menuWidth}/>
+            <Menu width={menuWidth} nameOfTheUser={nameOfTheUser} imageLink={user ? user.photo : ""}/>
             <FeedContent>
                 <FeedHeader>Feed</FeedHeader>
                 <PublishPiu />
-                <PostPiu myPost={true}/>
-                <PostPiu myPost={true}/>
-                <PostPiu myPost={true}/>
-                <PostPiu myPost={true}/>
             </FeedContent>
         </FeedPageContainer>
         </>

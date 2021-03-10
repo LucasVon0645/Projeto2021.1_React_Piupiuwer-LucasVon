@@ -58,10 +58,22 @@ export const PhotoPublishContainer = styled.div`
     background-color: #BBB;
     border-radius: 44px;
 
+    img {
+        height: 88px;
+        width: 88px;
+        margin-right: -25%;
+    }
+
     @media (min-width: 700px) {
         height: 100px;
         width: 100px;
         border-radius: 50px;
+
+        img {
+        height: 100px;
+        width: 100px;
+        margin-right: -25%;
+    }
     }
 
 `

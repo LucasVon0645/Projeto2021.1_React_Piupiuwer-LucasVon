@@ -11,8 +11,7 @@ import TalkIcon from '../../assets/icons/conversando.svg'
 
 import LandingImage from '../../assets/images/LandingImage.svg';
 
-import api from '../../services/api';
-import {TokenUserContext} from '../../hooks/TokenUserContextProvider'
+import {AuthContext} from '../../hooks/AuthProvider'
 import { useHistory } from 'react-router';
 
 
@@ -20,24 +19,16 @@ const Login: React.FC = () => {
 
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
-   const tokenUserObject = useContext(TokenUserContext);
+   const {login} = useContext(AuthContext);
    const history = useHistory();
 
-   const login = (event: FormEvent) => {
+   const handleLogin = async (event: FormEvent) => {
       event.preventDefault();
-
-      api.post('/sessions/login', {
-         email,
-         password
-      }).then(response => {
-         const token = response.data.token
-         const user = response.data.user;
-         tokenUserObject.setToken(token);
-         tokenUserObject.setUser(user);
-         history.push('/feed');
-         })
-      .catch(response => console.log(response))
+      const result = await login({email, password});
+      if (result === 1) history.push('/feed');
+      else alert('Erro no Login');
    }
+
 
    return (
 
@@ -60,7 +51,7 @@ const Login: React.FC = () => {
            </S.LandingContent>
            <S.LoginCard>
               <S.LoginCardTitle>Piupiuwer</S.LoginCardTitle>
-              <S.LoginForm onSubmit={login}>
+              <S.LoginForm onSubmit={handleLogin}>
                      <Input placeholder="Email ou nome de usuário" type="text" autoComplete="off" 
                      autoCorrect="off" autoCapitalize="off" spellCheck="false"
                      onChange={(email) => setEmail(email.target.value)}/>
