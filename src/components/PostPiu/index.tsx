@@ -10,6 +10,7 @@ import HighlightedIcon from '../../assets/icons/star_highlighted.svg'
 import { Piu } from '../../interfaces';
 import { AuthContext } from '../../hooks/AuthProvider';
 import api from '../../services/api';
+import { Link } from 'react-router-dom';
 
 interface PostPiuProps {
     myPost: boolean;
@@ -21,6 +22,7 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
     const [editableModeOn, setEditableModeOn] = useState(false);
 
     const name = piuInformation.user.first_name + " " + piuInformation.user.last_name;
+    const username = piuInformation.user.username;
 
     const {userData, updateUser} = useContext(AuthContext)
     const {token} = userData;
@@ -51,25 +53,19 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
 
         if (!CheckIfFavoriteOn()) {
 
-            console.log('oi');
 
             const response = await api.post('/pius/favorite', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
-            console.log(response);
         }
 
         else {
 
-            console.log('oi2');
 
             const response = await api.post('/pius/unfavorite', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
-            console.log(response);
         }
 
         updateUser();
 
     }
-
-    console.log("todos");
 
 
     const getTimeOfThePiu = () => {
@@ -99,8 +95,8 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
         <S.ProfileInfoContainer>
             <S.ProfileImageContainerPost><img src={piuInformation.user.photo} alt="user"/></S.ProfileImageContainerPost>
             <S.PostInformation>
-                <S.NameUser>{name}</S.NameUser>
-                <S.UserMoreInformation>{'@' + piuInformation.user.username + " - " + getTimeOfThePiu()}</S.UserMoreInformation>
+                <Link to={{pathname: '/Profile', state: {referrer: piuInformation.user}}}><S.NameUser>{name}</S.NameUser></Link>
+                <S.UserMoreInformation>{'@' + username + " - " + getTimeOfThePiu()}</S.UserMoreInformation>
             </S.PostInformation>
         </S.ProfileInfoContainer>
         <S.PostContent>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {MenuContainer, ProfileMenuContainer, ProfileImageMenu, 
 ProfileInfoMenu, ProfileNameLinkMenu, ProfileLinkMenu, MenuItemsContainer,
 MenuItem, MenuItemText} from './styles'
@@ -8,34 +8,38 @@ import LogOutIcon from './../../assets/icons/logout.svg';
 import FriendsIcon from './../../assets/icons/amigos.svg';
 import PasswordIcon from './../../assets/icons/padlock.svg'
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../hooks/AuthProvider';
 
 interface MenuProps {
     width: number;
-    nameOfTheUser: string,
-    imageLink: string
 }
 
-const Menu: React.FC<MenuProps> = ({width, nameOfTheUser, imageLink}) => {
+const Menu: React.FC<MenuProps> = ({width}) => {
+
+    const {userData, logout} = useContext(AuthContext);
+    const {user} = userData;
 
    return (
     <MenuContainer width={width}>
 
         <ProfileMenuContainer>
-            <ProfileImageMenu><img src={imageLink} alt="user"/></ProfileImageMenu>
+            <ProfileImageMenu><img src={user.photo} alt="user"/></ProfileImageMenu>
             <ProfileInfoMenu>
-                <ProfileNameLinkMenu>{nameOfTheUser}</ProfileNameLinkMenu>
-                <ProfileLinkMenu>Ir para o Perfil</ProfileLinkMenu>
+                <ProfileNameLinkMenu>{user.first_name + " " + user.last_name}</ProfileNameLinkMenu>
+                <Link to={{pathname: '/Profile', state: {referrer: user}}}><ProfileLinkMenu>Ir para o Perfil</ProfileLinkMenu></Link>
             </ProfileInfoMenu>
         </ProfileMenuContainer>
 
         <MenuItemsContainer>
             
-            <MenuItem>
-                <img src={HomeIcon} alt="Feed"></img>
-                <MenuItemText>Feed</MenuItemText>
-            </MenuItem>
+            <Link to={'/feed'}>
+                <MenuItem>
+                    <img src={HomeIcon} alt="Feed"></img>
+                    <MenuItemText>Feed</MenuItemText>
+                </MenuItem>
+            </Link>
 
-            <Link to="/">
+            <Link to="/" onClick={logout}>
                 <MenuItem style={{marginLeft: '0.5rem'}}>
                     <img src={LogOutIcon} alt="Sair"></img>
                     <MenuItemText>Sair</MenuItemText>

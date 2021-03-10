@@ -50,7 +50,7 @@ export const ProfileImageMenu = styled.div`
 
     img {
         height: 80px;
-        width: 80px;
+        width: auto;
         margin-right: -25%;
     }
 
@@ -61,7 +61,6 @@ export const ProfileImageMenu = styled.div`
 
         img {
             height: 100px;
-            width: 100px;
             margin-right: -25%;}
     }
 

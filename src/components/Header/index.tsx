@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import * as S from './styles';
 import {Link} from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import useWindownSize from '../../hooks/useWindowSize'
 import Logo from '../../assets/icons/logo.svg'
 import SearchIcon from '../../assets/icons/magnifier.svg'
 import LogOutIcon from '../../assets/icons/logout2.svg'
+import { AuthContext } from '../../hooks/AuthProvider';
 
 
 interface HeaderProps {
@@ -16,7 +17,9 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({toogleMenu,completeHeader}) => {
 
-    const {width} = useWindownSize()
+    const {logout} = useContext(AuthContext);
+    const {width} = useWindownSize();
+
 
    return (
 
@@ -34,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({toogleMenu,completeHeader}) => {
                     </S.SearchContainer>
                 </S.SearchBar>
                 <S.LogOutContainer>
-                    <Link to="/">
+                    <Link to="/" onClick={logout}>
                         <img src={LogOutIcon} alt="Sair"></img>
                         <p>Sair</p>
                     </Link>

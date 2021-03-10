@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import styled from "styled-components";
 
 
@@ -124,7 +123,7 @@ export const UsernameAndFollowContainer = styled.div`
     width: 100%;
 
     p {
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: normal;
         color: #444;
         font-style: normal;
@@ -141,6 +140,7 @@ export const FollowButton = styled.button`
     outline: none;
     border: none;
     box-shadow: 0 0.15vw #999;
+    margin-left: 16px;
 
 
     :active {
@@ -149,6 +149,36 @@ export const FollowButton = styled.button`
         background-color:#05023a;
     }
 
+`
+
+export const FollowingDiv= styled.div`
+    background-color: var(--blue2);
+    border-radius: 8px;
+    padding: 4px 16px;
+    font-size: 1.5rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
+
+
+    :active {
+        box-shadow: 0 0.2vw #666;
+        transform: translateY(0.16vw);
+        background-color:#05023a;
+    }
+
+    img {
+        
+        height: 24px;
+        width: auto;
+        margin-right: 8px;
+    }
+
+    p {
+        color: #FFF;
+        font-size: 1.2rem;
+    }
 `
 
 export const FavoritePiusTitle = styled.h3`
@@ -160,6 +190,7 @@ export const FavoritePiusTitle = styled.h3`
     margin-top: 16px;
     width: 90vw;
     margin-left: 5vw;
+
 `
 
 

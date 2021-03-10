@@ -20,11 +20,6 @@ const Feed: React.FC = () => {
     const [menuWidth, setMenuWidth] = useState(0);
     const [arrayOfPius, setArrayOfPius] = useState([] as JSX.Element[]);
     const {user, token} = userData;
-    let nameOfTheUser = "";
-
-    if (user) {
-        nameOfTheUser = user.first_name + " " + user.last_name;
-    }
 
     console.log(user);
 
@@ -47,7 +42,8 @@ const Feed: React.FC = () => {
 
         const getAllPius = async () => {
             try {
-                const {data} = await api.get('/pius', config)
+                const {data} = await api.get('/pius', config);
+                console.log(data);
                 setArrayOfPius(handleCreateAllPius(data));}
             catch {
                 alert('Erro na requisição de Pius');}
@@ -57,8 +53,6 @@ const Feed: React.FC = () => {
         getAllPius();
 
     }, [token, user.id]);
-
-    console.log(token);
  
 
     const ToogleMenu = () => {
@@ -76,7 +70,7 @@ const Feed: React.FC = () => {
         <>
         <Header toogleMenu={ToogleMenu} completeHeader={true}/>
         <FeedPageContainer>
-            <Menu width={menuWidth} nameOfTheUser={nameOfTheUser} imageLink={user ? user.photo : ""}/>
+            <Menu width={menuWidth} />
             <FeedContent>
                 <FeedHeader>Feed</FeedHeader>
                 <PublishPiu />
