@@ -16,7 +16,7 @@ export const PublishPiuContainer = styled.div`
     margin-top: 8px;
     margin-left: 5vw;
 
-    @media (min-width: 700px) {
+    @media (min-width: 800px) {
         padding: 32px;
         width: 60vw;
     }
@@ -57,11 +57,12 @@ export const PhotoPublishContainer = styled.div`
     overflow: hidden;
     background-color: #BBB;
     border-radius: 44px;
+    display: flex;
+    justify-content: center;
 
     img {
         height: 88px;
         width: 88px;
-        margin-right: -25%;
     }
 
     @media (min-width: 700px) {
@@ -72,7 +73,6 @@ export const PhotoPublishContainer = styled.div`
         img {
         height: 100px;
         width: 100px;
-        margin-right: -25%;
     }
     }
 
@@ -84,11 +84,15 @@ export const PostWriteContainer = styled.div`
     width: 64%;
     min-width: 200px;
 
-    @media (min-width: 500px) {
-        width: 80%;
+    @media (min-width: 450px) {
+        width: 75%;
     }
 
-    @media (min-width: 700px) {
+    @media (min-width: 650px) {
+        width: 82%;
+    }
+
+    @media (min-width: 800px) {
         width: 85%;
     }
 `
@@ -130,13 +134,17 @@ export const PublishButton = styled.button`
     background-color: var(--blue1);
     border-radius: 8px;
     color: #FFF;
-    padding: 8px 16px 8px 16px;
+    height: 4rem;
+    padding: 0 16px;
     font-size: 1.5rem;
     cursor: pointer;
     outline: none;
     border: none;
     margin-left: 2%;
     box-shadow: 0 0.15vw #999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 
     :active {
@@ -152,18 +160,28 @@ export const CleanButton = styled.button`
     background-color: var(--blue3);
     color: #FFF;
     box-sizing: border-box;
-    padding: 8px 16px 8px 16px;
+    height: 4rem;
+    padding: 0 16px;
     font-size: 1.5rem;
     margin-left: 2%;
     cursor: pointer;
     outline: none;
     border: none;
     box-shadow: 0 0.15vw #999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     :active {
         box-shadow: 0 0.2vw #666;
         transform: translateY(0.16vw);
         background-color: #028da8;
+    }
+
+    img {
+        height: 2rem;
+        width: auto;
+        margin-right: 8px;
     }
 
 `
@@ -191,13 +209,23 @@ export const SpanErrorMessage = styled.span`
         border-color: #E71313 transparent transparent transparent;
     }
 
+    @media (min-width: 450px) {
+        left: -40%;
+        bottom: -56%;
+    
+
+    ::after {
+        right: 25%;
+        top:-20px;
+        border-color:  transparent transparent #E71313 transparent;
+    }}
+
     @media (min-width: 700px) {
         left: 0;
         bottom: -56%;
     
 
     ::after {
-        left: 50%;
         top:-20px;
         border-color:  transparent transparent #E71313 transparent;
     }}

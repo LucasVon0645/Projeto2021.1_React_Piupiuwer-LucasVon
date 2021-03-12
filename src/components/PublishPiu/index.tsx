@@ -5,6 +5,8 @@ import BirdIcon from '../../assets/icons/passaro-cantando-com-notas-musicais.svg
 import {AuthContext} from '../../hooks/AuthProvider';
 import api from '../../services/api';
 
+import CleanIcon from '../../assets/icons/clean.svg'
+
 const PublishPiu: React.FC = () => {
 
    const TextAreaElement = useRef<HTMLTextAreaElement>(null);
@@ -71,7 +73,7 @@ const PublishPiu: React.FC = () => {
                 <S.InteractionBlockPublish>
                     <S.Counter numberOfChars={numberOfChars}>{numberOfChars + '/140'}</S.Counter>
                     <S.PublishButton type='submit' onClick={handlePublishPiu}>PUBLICAR</S.PublishButton>
-                    <S.CleanButton onClick={handleCleanTextArea}>LIMPAR</S.CleanButton>
+                    <S.CleanButton onClick={handleCleanTextArea}><img src={CleanIcon} alt="clean"/>LIMPAR</S.CleanButton>
                 </S.InteractionBlockPublish>
            </form>
        </S.PublishPiuContainer>

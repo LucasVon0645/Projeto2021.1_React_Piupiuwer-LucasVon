@@ -18,6 +18,8 @@ export const HeaderContainer = styled.div<HeaderContainerProps>`
         else
             return "";
     }}
+
+    z-index: 2;
 `
 
 export const InteractionContainer = styled.div`
@@ -65,6 +67,10 @@ export const SearchBar = styled.div`
     justify-content: center;
     align-items: center;
 
+
+    @media (min-width: 450px) {
+        width: 280px;
+    }
 
     @media (min-width: 550px) {
         width: 300px;

@@ -16,6 +16,7 @@ export const LoginContent = styled.div`
         flex-direction: row;
         justify-content: space-evenly;
         align-items: flex-center;
+        min-height: 550px;
 
         img {
         margin-top: 16px;

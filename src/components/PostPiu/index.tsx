@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import * as S from './styles'
 
 import EditIcon from '../../assets/icons/editar.svg'
@@ -21,6 +21,8 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
 
     const [editableModeOn, setEditableModeOn] = useState(false);
 
+    console.log('Renderizou Piu');
+
     const name = piuInformation.user.first_name + " " + piuInformation.user.last_name;
     const username = piuInformation.user.username;
 
@@ -29,14 +31,15 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
 
     const piu_id = piuInformation.id;
 
-    const handleLikePiu = async () => {
+    const handleLikePiu = useCallback(async () => {
 
         const response = await api.post('/pius/like', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
         console.log(response);
         window.location.reload();
-    }
+    },[piu_id, token]);
 
-    const CheckIfFavoriteOn = () => {
+
+    const CheckIfFavoriteOn = useCallback(() => {
         let result = false;
         userData.user.favorites.forEach((element) => {
             if (element.id === piuInformation.id){
@@ -45,27 +48,27 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
         })
 
         return result;
-    }
+    }, [piuInformation, userData.user.favorites])
 
-    const handleFavoritePiu = async () => {
 
-        console.log(CheckIfFavoriteOn());
-
+    const handleFavoritePiu = useCallback(async () => {
+        console.log("renderiou handleCheck");
         if (!CheckIfFavoriteOn()) {
 
-
-            const response = await api.post('/pius/favorite', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
+            console.log(token);
+            console.log(piu_id);
+            await api.post('/pius/favorite', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
+            console.log("favoritou");
         }
 
         else {
 
-
-            const response = await api.post('/pius/unfavorite', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
+            console.log("desfavoritou");
+            await api.post('/pius/unfavorite', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
         }
-
         updateUser();
+    }, [CheckIfFavoriteOn, piu_id, token, updateUser])
 
-    }
 
 
     const getTimeOfThePiu = () => {
@@ -79,47 +82,45 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
         if (min.length === 1) min = '0' + min; 
 
         return day + "/" + month + "/" + year + " " + hour + "h" + min + "min";
-        
     }
 
 
-    const handleDeletePiu = async () => {
+    const handleDeletePiu = useCallback(async () => {
         const response = await api.delete('/pius',  {headers: { Authorization: `Bearer ${token}` }, data: {piu_id}});
         console.log(response);
         window.location.reload();
-    }
+    }, [piu_id, token]);
 
     return (
     
-    <S.PostContainer>
-        <S.ProfileInfoContainer>
-            <S.ProfileImageContainerPost><img src={piuInformation.user.photo} alt="user"/></S.ProfileImageContainerPost>
-            <S.PostInformation>
-                <Link to={{pathname: '/Profile', state: {referrer: piuInformation.user}}}><S.NameUser>{name}</S.NameUser></Link>
-                <S.UserMoreInformation>{'@' + username + " - " + getTimeOfThePiu()}</S.UserMoreInformation>
-            </S.PostInformation>
-        </S.ProfileInfoContainer>
-        <S.PostContent>
-            {piuInformation.text}
-        </S.PostContent>
-        <S.PostInteractionContainer myPost={myPost}>
-            {myPost &&
-                <S.EditDeleteContainer>
-                <img src={editableModeOn ? SaveIcon : EditIcon} alt="Edit" onClick={() => setEditableModeOn(!editableModeOn)}/>
-                {editableModeOn && <span>Salvar</span>}
-                <img src={TrashIcon} alt="Delete" onClick={() => handleDeletePiu()}/>
-            </S.EditDeleteContainer>}
-            <S.LikeHighlightContainer>
-                <S.LikesContainer>
-                    <p>{piuInformation.likes.length}</p>
-                    <img src={LikeIcon} alt="like" onClick={() => handleLikePiu()}/>
-                </S.LikesContainer>
-                <img src={CheckIfFavoriteOn() ? HighlightedIcon : HighlightIcon} alt={"Highlight"} onClick={() => handleFavoritePiu()}></img>
-            </S.LikeHighlightContainer>
-        </S.PostInteractionContainer>
-    </S.PostContainer>
+        <S.PostContainer>
+            <S.ProfileInfoContainer>
+                <S.ProfileImageContainerPost><img src={piuInformation.user.photo} alt="user"/></S.ProfileImageContainerPost>
+                <S.PostInformation>
+                    <Link to={{pathname: '/Profile', search: piuInformation.user.username}}><S.NameUser>{name}</S.NameUser></Link>
+                    <S.UserMoreInformation>{'@' + username + " - " + getTimeOfThePiu()}</S.UserMoreInformation>
+                </S.PostInformation>
+            </S.ProfileInfoContainer>
+            <S.PostContent>
+                {piuInformation.text}
+            </S.PostContent>
+            <S.PostInteractionContainer myPost={myPost}>
+                {myPost &&
+                    <S.EditDeleteContainer>
+                    <img src={editableModeOn ? SaveIcon : EditIcon} alt="Edit" onClick={() => setEditableModeOn(!editableModeOn)}/>
+                    {editableModeOn && <span>Salvar</span>}
+                    <img src={TrashIcon} alt="Delete" onClick={() => handleDeletePiu()}/>
+                </S.EditDeleteContainer>}
+                <S.LikeHighlightContainer>
+                    <S.LikesContainer>
+                        <p>{piuInformation.likes.length}</p>
+                        <img src={LikeIcon} alt="like" onClick={() => handleLikePiu()}/>
+                    </S.LikesContainer>
+                    <img src={CheckIfFavoriteOn() ? HighlightedIcon : HighlightIcon} alt={"Highlight"} onClick={() => handleFavoritePiu()}></img>
+                </S.LikeHighlightContainer>
+            </S.PostInteractionContainer>
+        </S.PostContainer>
        
-
    );}
 
 export default PostPiu

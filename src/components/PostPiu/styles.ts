@@ -13,7 +13,7 @@ export const PostContainer = styled.div`
     margin-left: 5vw;
     margin-top: 5vw;
 
-    @media (min-width: 700px) {
+    @media (min-width: 800px) {
         padding: 32px;
         width: 60vw;
         margin-top: 4vw;
@@ -33,11 +33,12 @@ export const ProfileImageContainerPost = styled.div`
     position: relative;
     overflow: hidden;
     background-color: #BBB;
+    display: flex;
+    justify-content: center;
 
     img {
-        position: absolute;
         height: 50px;
-        width: auto;
+        width: auto;  
     }
 
     @media (min-width: 700px) {

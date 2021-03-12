@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext} from 'react';
+import React, { useEffect, useState, useContext, useCallback} from 'react';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import PostPiu from '../../components/PostPiu';
@@ -18,10 +18,20 @@ const Feed: React.FC = () => {
     const {userData} = useContext(AuthContext)
     const [menuMobileVisible, setMenuMobileVisible] = useState(false);
     const [menuWidth, setMenuWidth] = useState(0);
-    const [arrayOfPius, setArrayOfPius] = useState([] as JSX.Element[]);
+    const [arrayOfPius, setArrayOfPius] = useState([]);
     const {user, token} = userData;
 
     console.log(user);
+
+    const handleCreateAllPius = (PiusData: Interfaces.Piu[]) => {
+        return PiusData.map( (piu) => {
+            let config = false;
+            if (piu.user.id === user.id) config = true;
+            return (
+                <PostPiu myPost={config} piuInformation={piu} key={piu.id}/>
+            )
+        })
+    }
 
 
     useEffect(() => {
@@ -30,21 +40,12 @@ const Feed: React.FC = () => {
             headers: { Authorization: `Bearer ${token}` }
         }
 
-        const handleCreateAllPius = (PiusData: Interfaces.Piu[]) => {
-            return PiusData.map( (piu) => {
-                let config = false;
-                if (piu.user.id === user.id) config = true;
-                return (
-                    <PostPiu myPost={config} piuInformation={piu} key={piu.id}/>
-                )
-            })
-        }
 
         const getAllPius = async () => {
             try {
                 const {data} = await api.get('/pius', config);
                 console.log(data);
-                setArrayOfPius(handleCreateAllPius(data));}
+                setArrayOfPius(data);}
             catch {
                 alert('Erro na requisição de Pius');}
         };
@@ -55,13 +56,13 @@ const Feed: React.FC = () => {
     }, [token, user.id]);
  
 
-    const ToogleMenu = () => {
+    const ToogleMenu = useCallback(() => {
         setMenuMobileVisible(!menuMobileVisible);
         if (menuWidth === 0) {
             setMenuWidth(700);}
         else {
             setMenuWidth(0);}
-    }
+    }, [menuMobileVisible, menuWidth]);
 
 
 
@@ -74,7 +75,7 @@ const Feed: React.FC = () => {
             <FeedContent>
                 <FeedHeader>Feed</FeedHeader>
                 <PublishPiu />
-                {arrayOfPius}
+                {handleCreateAllPius(arrayOfPius)}
             </FeedContent>
         </FeedPageContainer>
         </>

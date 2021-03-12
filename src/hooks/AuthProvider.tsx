@@ -1,4 +1,4 @@
-import { createContext, useState} from "react";
+import { createContext, useCallback, useState} from "react";
 import * as Interfaces from '../interfaces/index'
 import api from "../services/api";
 
@@ -57,20 +57,22 @@ const AuthProvider: React.FC = ({children}) => {
             return 0
         }}
 
-    const logout = () => {
+    const logout = useCallback(() => {
         localStorage.removeItem('@Project:token');
         localStorage.removeItem('@Project:user');
 
         setUserData({} as AuthState)
-    }
+    }, [])
 
     const updateUser = async () => {
 
         const token = userData.token;
         const username = userData.user.username
         const response = await api.get('/users?username=' + username, {headers: { Authorization: `Bearer ${token}` }})
+        console.log(response);
         const user: Interfaces.User = response.data[0]
-        localStorage.setItem('@Project:user', JSON.stringify(user))
+        localStorage.setItem('@Project:user', JSON.stringify(user));
+        console.log("atualizou");
         setUserData({token, user});
     }
 

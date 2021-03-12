@@ -19,7 +19,12 @@ export const MenuContainer = styled.div<MenuContainerProps>`
     height: calc(100vh - 9rem);
     
 
-    @media (min-width: 700px) {
+    @media (min-width: 800px) {
+        width: 320px;
+        z-index: 0;
+    }
+
+    @media (min-width: 1050px) {
         width: 384px;
         z-index: 0;
     }
@@ -47,11 +52,12 @@ export const ProfileImageMenu = styled.div`
     border-radius: 40px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
 
     img {
         height: 80px;
         width: auto;
-        margin-right: -25%;
     }
 
     @media (min-width: 700px) {
@@ -60,8 +66,7 @@ export const ProfileImageMenu = styled.div`
         border-radius: 50px;
 
         img {
-            height: 100px;
-            margin-right: -25%;}
+            height: 100px;}
     }
 
 `

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import PostPiu from '../../components/PostPiu';
@@ -15,14 +15,67 @@ const Profile: React.FC = () => {
 
 
     const {userData, updateUser} = useContext(AuthContext);
+
     const [menuMobileVisible, setMenuMobileVisible] = useState(false);
     const [menuWidth, setMenuWidth] = useState(0);
-    const [arrayOfPius, setArrayOfPius] = useState([] as JSX.Element[]);
+    const [arrayOfPius, setArrayOfPius] = useState<Interfaces.Piu[] | []>([]);
+    const [userOfThePage, setUserOfThePage] = useState<Interfaces.User | null>(null);
 
     const {user: userLogged, token} = userData;
 
     const location: any = useLocation();
-    const user = location.state.referrer;
+    const username = location.search.replace('?', '') as string;
+    console.log('renderizou a página');
+
+    const getUserOfThePage = useCallback(async () => {
+        const response = await api.get('/users?username='+username, {headers: { Authorization: `Bearer ${token}` }});
+        const data: Interfaces.User[] = response.data;
+        setUserOfThePage(data[0])
+    }, [token, username]);
+
+    useEffect(() => {
+        console.log('getUserOfThePage');
+        getUserOfThePage();
+    }, [getUserOfThePage]);
+
+    const ArrayIDFavoritePius = useMemo(() => {
+        console.log('ArrayIDFavoritePius')
+        if (userOfThePage){
+            let source = userOfThePage;
+            if (userOfThePage.id === userLogged.id) source = userLogged;
+            return source.favorites.map((element) => {
+                return element.id;})}
+        else return []}, [userOfThePage, userLogged]);
+
+
+    const getFavoritePius = useCallback(() => {
+
+        api.get('/pius', {headers: { Authorization: `Bearer ${token}` }}).then(response => {
+
+            const data: Interfaces.Piu[] = response.data;
+
+            const FavoritePiusArray = data.filter((piu) => {
+
+                    if (ArrayIDFavoritePius.includes(piu.id))
+                        return true;
+                    else 
+                        return false;
+                })
+
+            setArrayOfPius(FavoritePiusArray);
+            
+            
+            })
+        
+
+    }, [ArrayIDFavoritePius, token])
+
+
+    useEffect(() => {
+        if(userOfThePage)
+            console.log('getFavorites');
+            getFavoritePius();
+    }, [getFavoritePius, userOfThePage]);
 
 
     const ToogleMenu = () => {
@@ -34,21 +87,23 @@ const Profile: React.FC = () => {
     }
 
     const handleFollow  = async () => {
-        const response = await api.post('/follow', {followed_id: user.id}, {headers: { Authorization: `Bearer ${token}` }});
-        updateUser();
-        console.log(response);
+        if (userOfThePage){
+            const response = await api.post('/follow', {followed_id: userOfThePage.id}, {headers: { Authorization: `Bearer ${token}` }});
+            updateUser();
+            console.log(response);}
 
     }
 
     const verifyIfIsFollowing = () => {
-        let following = false;
-        userLogged.following.forEach((element) => {
-            if (element.id === user.id) {
-                following = true;
-            }
-        }) 
+        if (userOfThePage){
+            let following = false;
+            userLogged.following.forEach((element) => {
+                if (element.id === userOfThePage.id) {
+                    following = true;
+                }
+            }) 
 
-        return following;
+            return following;}
     }
 
     const ReturnTheFollowingElement = () => {
@@ -59,54 +114,48 @@ const Profile: React.FC = () => {
     }
 
 
-    useEffect(() => {
+    const handleCreateFavoritePius = () => {
+        
+        return arrayOfPius.map((piu: any) => {
+            let config = false;
+            if (piu.user.id === userLogged.id) return (<PostPiu myPost={true} piuInformation={piu} key={piu.id}/>)
+            return (<PostPiu myPost={config} piuInformation={piu} key={piu.id}/>)
+        })
+    };
 
-        const handleCreateFavoritePius = (PiusData: Interfaces.Piu[]) => {
-            return PiusData.map( (piu) => {
-                let config = false;
-                if (piu.user.id === user.id) config = true;
-                return (
-                    <PostPiu myPost={config} piuInformation={piu} key={piu.id}/>
-                )
-            })
-        }
 
-        const getAllFavoritePius = () => {
-            const listOfFavoritePius = user.favorites;
-            console.log(listOfFavoritePius)
-            setArrayOfPius(handleCreateFavoritePius(listOfFavoritePius));
-        };
+    
 
-        /* getAllFavoritePius(); */
 
-    }, [token, user.username, user.id, user.favorites]);
+
 
    return (
-
-       <>
+    <> 
         <Header completeHeader={true} toogleMenu={ToogleMenu} />
+      
         <S.ProfilePageContainer>
             <Menu width={menuWidth} />
+            {userOfThePage &&
             <S.ProfileContent>
-                <S.ProfileHeader>{user.id === userLogged.id ? "Meu Perfil" : "Perfil"}</S.ProfileHeader>
+                <S.ProfileHeader>{userOfThePage.id === userLogged.id ? "Meu Perfil" : "Perfil"}</S.ProfileHeader>
                 <S.PerfilCard>
                     <S.ProfileInformation>
-                        <S.PhotoContainer><img src={user.photo} alt="user"/></S.PhotoContainer>
+                        <S.PhotoContainer><img src={userOfThePage.photo} alt="user"/></S.PhotoContainer>
                         <S.ProfileMainInfo>
-                                <h3>{user.first_name + " " + user.last_name}</h3>
+                                <h3>{userOfThePage.first_name + " " + userOfThePage.last_name}</h3>
                                 <S.UsernameAndFollowContainer>
-                                    <p>{'@'+user.username}</p>
-                                    {user.id !== userLogged.id && ReturnTheFollowingElement()}
+                                    <p>{'@'+userOfThePage.username}</p>
+                                    {userOfThePage.id !== userLogged.id && ReturnTheFollowingElement()}
                                 </S.UsernameAndFollowContainer>
                         </S.ProfileMainInfo>
                     </S.ProfileInformation>
-                    <S.Description>{user.about}</S.Description>
+                    <S.Description>{userOfThePage.about}</S.Description>
                 </S.PerfilCard>
                 <S.FavoritePiusTitle>Pius Favoritos</S.FavoritePiusTitle>
-                {arrayOfPius}
-            </S.ProfileContent>
+                {handleCreateFavoritePius()}
+            </S.ProfileContent>}
         </S.ProfilePageContainer>
-       </>
+    </>
 
    );}
 

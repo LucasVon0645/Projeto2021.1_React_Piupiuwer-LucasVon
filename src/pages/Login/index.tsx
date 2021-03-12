@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useState } from 'react';
+import React, { FormEvent, useCallback, useContext, useState } from 'react';
 import Header from '../../components/Header';
 import Input from '../../components/Input';
 import * as S from './styles'
@@ -11,9 +11,9 @@ import TalkIcon from '../../assets/icons/conversando.svg'
 
 import LandingImage from '../../assets/images/LandingImage.svg';
 
-import {AuthContext} from '../../hooks/AuthProvider'
 import { useHistory } from 'react-router';
 import useWindowSize from '../../hooks/useWindowSize';
+import useAuth from '../../hooks/useAuth';
 
 
 const Login: React.FC = () => {
@@ -21,15 +21,19 @@ const Login: React.FC = () => {
    const [email, setEmail] = useState("");
    const [loginFailed, setLoginFailed] = useState(false);
    const [password, setPassword] = useState("");
-   const {login} = useContext(AuthContext);
    const history = useHistory();
+   const {userData, login} = useAuth();
 
-   const handleLogin = async (event: FormEvent) => {
+   if (userData.user) {
+      history.push('/feed');
+   }
+
+   const handleLogin = useCallback(async (event: FormEvent) => {
       event.preventDefault();
       const result = await login({email, password});
       if (result === 1) history.push('/feed');
       else setLoginFailed(true);
-   }
+   }, [email, password, history, login]);
 
    const {height} = useWindowSize();
 

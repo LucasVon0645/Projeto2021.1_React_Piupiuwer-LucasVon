@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({toogleMenu,completeHeader}) => {
 
        <S.HeaderContainer completeHeader={completeHeader}>
            <S.InteractionContainer>
-               {width < 700 && completeHeader ? <S.MenuButton onClick={toogleMenu}>☰</S.MenuButton> : <img src={Logo} alt="logo"/>}
+               {width < 800 && completeHeader ? <S.MenuButton onClick={toogleMenu}>☰</S.MenuButton> : <img src={Logo} alt="logo"/>}
                 <S.LogoText>Piupiuwer</S.LogoText>
            </S.InteractionContainer>
            {completeHeader &&
