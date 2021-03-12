@@ -1,10 +1,12 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import * as S from './styles'
 
+import NoneUserImage from '../../assets/icons/user_none.svg'
 import EditIcon from '../../assets/icons/editar.svg'
 import SaveIcon from '../../assets/icons/salvar.svg'
 import TrashIcon from '../../assets/icons/trash.svg'
 import LikeIcon from '../../assets/icons/like.svg'
+import LikedIcon from '../../assets/icons/liked.svg'
 import HighlightIcon from '../../assets/icons/highlight.svg'
 import HighlightedIcon from '../../assets/icons/star_highlighted.svg'
 import { Piu } from '../../interfaces';
@@ -31,12 +33,33 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
 
     const piu_id = piuInformation.id;
 
+    const CheckIfLikedOn = useCallback(() => {
+        let result = false;
+        piuInformation.likes.forEach((element) => {
+            if (element.user.id === userData.user.id){
+                result = true;
+            }   
+        })
+
+        return result;
+    }, [piuInformation, userData.user.id]);
+
+    const [liked, setLiked] = useState(CheckIfLikedOn())
+    const NumberOfLikes = useRef(piuInformation.likes.length)
+
+
     const handleLikePiu = useCallback(async () => {
 
         const response = await api.post('/pius/like', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
         console.log(response);
-        window.location.reload();
-    },[piu_id, token]);
+        console.log(response);
+        if (liked)
+            NumberOfLikes.current -= 1;
+        else
+            NumberOfLikes.current += 1;
+
+        setLiked(!liked);
+    },[piu_id, token, liked]);
 
 
     const CheckIfFavoriteOn = useCallback(() => {
@@ -95,7 +118,7 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
     
         <S.PostContainer>
             <S.ProfileInfoContainer>
-                <S.ProfileImageContainerPost><img src={piuInformation.user.photo} alt="user"/></S.ProfileImageContainerPost>
+                <S.ProfileImageContainerPost><img src={piuInformation.user.photo ? piuInformation.user.photo : NoneUserImage} alt="user"/></S.ProfileImageContainerPost>
                 <S.PostInformation>
                     <Link to={{pathname: '/Profile', search: piuInformation.user.username}}><S.NameUser>{name}</S.NameUser></Link>
                     <S.UserMoreInformation>{'@' + username + " - " + getTimeOfThePiu()}</S.UserMoreInformation>
@@ -113,8 +136,8 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
                 </S.EditDeleteContainer>}
                 <S.LikeHighlightContainer>
                     <S.LikesContainer>
-                        <p>{piuInformation.likes.length}</p>
-                        <img src={LikeIcon} alt="like" onClick={() => handleLikePiu()}/>
+                        <p>{NumberOfLikes.current}</p>
+                        <img src={liked ? LikedIcon : LikeIcon} alt="like" onClick={() => handleLikePiu()}/>
                     </S.LikesContainer>
                     <img src={CheckIfFavoriteOn() ? HighlightedIcon : HighlightIcon} alt={"Highlight"} onClick={() => handleFavoritePiu()}></img>
                 </S.LikeHighlightContainer>

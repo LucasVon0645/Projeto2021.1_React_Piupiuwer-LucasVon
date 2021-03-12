@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useContext, useState } from 'react';
+import React, { FormEvent, useCallback, useState } from 'react';
 import Header from '../../components/Header';
 import Input from '../../components/Input';
 import * as S from './styles'
@@ -36,6 +36,11 @@ const Login: React.FC = () => {
    }, [email, password, history, login]);
 
    const {height} = useWindowSize();
+
+   const goToRegisterPage = (event: FormEvent) => {
+         event.preventDefault();
+         history.push('/Register');
+   }
 
 
    return (
@@ -76,7 +81,7 @@ const Login: React.FC = () => {
                         <img src={PinterestIcon} alt="pinterest"/>
                      </S.AnotherAccountLinksContainer>
               </S.LoginForm>
-              <S.SignInForm>
+              <S.SignInForm onSubmit={goToRegisterPage}>
                  <S.SignInLabel htmlFor="SignIn">É novo por aqui? Cadastre-se!</S.SignInLabel>
                  <S.ButtonSignIn id="SignIn">cadastrar</S.ButtonSignIn>
               </S.SignInForm>

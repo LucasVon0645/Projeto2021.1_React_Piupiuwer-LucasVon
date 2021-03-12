@@ -8,6 +8,8 @@ import * as Interfaces from '../../interfaces/index';
 import { useLocation } from 'react-router';
 import api from '../../services/api';
 
+
+import NoneUserImage from '../../assets/icons/user_none.svg'
 import FollowinfIcon from '../../assets/icons/followers.svg'
 
 
@@ -140,7 +142,7 @@ const Profile: React.FC = () => {
                 <S.ProfileHeader>{userOfThePage.id === userLogged.id ? "Meu Perfil" : "Perfil"}</S.ProfileHeader>
                 <S.PerfilCard>
                     <S.ProfileInformation>
-                        <S.PhotoContainer><img src={userOfThePage.photo} alt="user"/></S.PhotoContainer>
+                        <S.PhotoContainer><img src={userOfThePage.photo ? userOfThePage.photo : NoneUserImage} alt="user"/></S.PhotoContainer>
                         <S.ProfileMainInfo>
                                 <h3>{userOfThePage.first_name + " " + userOfThePage.last_name}</h3>
                                 <S.UsernameAndFollowContainer>

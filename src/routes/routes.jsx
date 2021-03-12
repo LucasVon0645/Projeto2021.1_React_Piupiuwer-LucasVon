@@ -3,6 +3,7 @@ import useAuth from '../hooks/useAuth'
 import Feed from '../pages/Feed'
 import Login from '../pages/Login'
 import Profile from '../pages/ProfilePage'
+import Register from '../pages/Register'
 
 
 function Routes () {
@@ -21,10 +22,12 @@ function Routes () {
         )}
 
     else {
-        console.log("oi");
         
-        return (<BrowserRouter>
+        return (
+
+        <BrowserRouter>
              <Route path="/" exact component={Login} />
+             <Route path="/Register" exact component={Register} />
         </BrowserRouter>)
 
     }

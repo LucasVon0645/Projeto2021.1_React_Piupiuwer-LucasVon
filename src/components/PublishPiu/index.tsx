@@ -1,6 +1,7 @@
 import React, { FormEvent, useRef, useState, useContext } from 'react';
 import * as S from './styles'
 
+import NoneUserImage from '../../assets/icons/user_none.svg';
 import BirdIcon from '../../assets/icons/passaro-cantando-com-notas-musicais.svg'
 import {AuthContext} from '../../hooks/AuthProvider';
 import api from '../../services/api';
@@ -60,7 +61,7 @@ const PublishPiu: React.FC = () => {
                    <img src={BirdIcon} alt="Piu"></img>
                 </S.LabelPublish>
                 <S.PublishField>
-                    <S.PhotoPublishContainer><img src={user ? user.photo : ""} alt="user" /></S.PhotoPublishContainer>
+                    <S.PhotoPublishContainer><img src={user.photo ? user.photo : NoneUserImage} alt="user" /></S.PhotoPublishContainer>
                     <S.PostWriteContainer>
                         <S.PostWriteTextArea ref={TextAreaElement} placeholder="Digite um novo Piu" onInput={(event) => showNumberOfChars(event)} 
                         numberOfChars={numberOfChars} onChange={(event) => setMessage(event.target.value)}></S.PostWriteTextArea>
