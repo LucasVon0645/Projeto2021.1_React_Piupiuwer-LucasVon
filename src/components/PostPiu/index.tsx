@@ -118,7 +118,7 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
     
         <S.PostContainer>
             <S.ProfileInfoContainer>
-                <S.ProfileImageContainerPost><img src={piuInformation.user.photo ? piuInformation.user.photo : NoneUserImage} alt="user"/></S.ProfileImageContainerPost>
+                <S.ProfileImageContainerPost><img src={piuInformation.user.photo && piuInformation.user.photo !== '' ? piuInformation.user.photo : NoneUserImage} alt="user"/></S.ProfileImageContainerPost>
                 <S.PostInformation>
                     <Link to={{pathname: '/Profile', search: piuInformation.user.username}}><S.NameUser>{name}</S.NameUser></Link>
                     <S.UserMoreInformation>{'@' + username + " - " + getTimeOfThePiu()}</S.UserMoreInformation>

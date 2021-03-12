@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import Header from '../../components/Header';
 import Input from '../../components/Input';
 import useWindowSize from '../../hooks/useWindowSize';
@@ -37,6 +37,8 @@ const Register: React.FC = () => {
             console.log(response);
         }
     }
+
+    console.log(first_name, last_name, email, about, username, password, photo);
 
 
 

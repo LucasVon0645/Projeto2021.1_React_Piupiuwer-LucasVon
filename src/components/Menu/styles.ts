@@ -130,7 +130,6 @@ export const MenuItemText = styled.h3`
     font-style: normal;
     letter-spacing: -0.01em;
     color: #FFFFFF;
-    overflow: hidden;
     
 `
 

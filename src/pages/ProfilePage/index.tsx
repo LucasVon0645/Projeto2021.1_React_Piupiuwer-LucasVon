@@ -11,6 +11,7 @@ import api from '../../services/api';
 
 import NoneUserImage from '../../assets/icons/user_none.svg'
 import FollowinfIcon from '../../assets/icons/followers.svg'
+import { Link } from 'react-router-dom';
 
 
 const Profile: React.FC = () => {
@@ -125,6 +126,13 @@ const Profile: React.FC = () => {
         })
     };
 
+    const handleCreateFollowersList = () => {
+        if (userOfThePage)
+            return userOfThePage.followers.map((user: any) => {
+                return (<Link key={user.id} to={{pathname: '/Profile', search: user.username }}><S.FollowerItemContainer><S.ProfileImageFollowerContainer><img src={user.photo} alt="follower"/></S.ProfileImageFollowerContainer><p>{user.first_name + ' ' + user.last_name}</p></S.FollowerItemContainer></Link>)
+            })
+    };
+
 
     
 
@@ -153,8 +161,12 @@ const Profile: React.FC = () => {
                     </S.ProfileInformation>
                     <S.Description>{userOfThePage.about}</S.Description>
                 </S.PerfilCard>
-                <S.FavoritePiusTitle>Pius Favoritos</S.FavoritePiusTitle>
+                <S.FavoritePiusTitle>{'Pius Favoritos (' + ArrayIDFavoritePius.length + ')'}</S.FavoritePiusTitle>
                 {handleCreateFavoritePius()}
+                <S.FollowersTitle id={"followers"}>{'Seguidores (' + userOfThePage.followers.length + ')'}</S.FollowersTitle>
+                <S.FollowersListContainer>
+                    {handleCreateFollowersList()}
+                </S.FollowersListContainer>
             </S.ProfileContent>}
         </S.ProfilePageContainer>
     </>

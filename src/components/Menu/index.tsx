@@ -3,6 +3,7 @@ import {MenuContainer, ProfileMenuContainer, ProfileImageMenu,
 ProfileInfoMenu, ProfileNameLinkMenu, ProfileLinkMenu, MenuItemsContainer,
 MenuItem, MenuItemText} from './styles'
 
+import NoneUserImage from '../../assets/icons/user_none.svg'
 import HomeIcon from './../../assets/icons/botao-home.svg';
 import LogOutIcon from './../../assets/icons/logout.svg';
 import FriendsIcon from './../../assets/icons/amigos.svg';
@@ -19,14 +20,15 @@ const Menu: React.FC<MenuProps> = ({width}) => {
     const {userData, logout} = useContext(AuthContext);
     const {user} = userData;
 
+    console.log('Foto', user.photo)
    return (
     <MenuContainer width={width}>
 
         <ProfileMenuContainer>
-            <ProfileImageMenu><img src={user.photo} alt="user"/></ProfileImageMenu>
+            <ProfileImageMenu><img src={user.photo && user.photo !== '' ? user.photo : NoneUserImage} alt="user"/></ProfileImageMenu>
             <ProfileInfoMenu>
                 <ProfileNameLinkMenu>{user.first_name + " " + user.last_name}</ProfileNameLinkMenu>
-                <Link to={{pathname: '/Profile', state: {referrer: user}}}><ProfileLinkMenu>Ir para o Perfil</ProfileLinkMenu></Link>
+                <Link to={{pathname: '/Profile', search: user.username}}><ProfileLinkMenu>Ir para o Perfil</ProfileLinkMenu></Link>
             </ProfileInfoMenu>
         </ProfileMenuContainer>
 
@@ -46,10 +48,12 @@ const Menu: React.FC<MenuProps> = ({width}) => {
                 </MenuItem>
             </Link>
 
-            <MenuItem>
-                <img src={FriendsIcon} alt="amigos"></img>
-                <MenuItemText>Amigos</MenuItemText>
-            </MenuItem>
+            <Link to={{pathname: '/Profile/#followers', search: user.username}}>
+                <MenuItem>
+                    <img src={FriendsIcon} alt="amigos"></img>
+                    <MenuItemText>{'Seguidores ('+user.followers.length+')' }</MenuItemText>
+                </MenuItem>
+            </Link>
 
             <MenuItem>
                 <img src={PasswordIcon} alt="senha"></img>

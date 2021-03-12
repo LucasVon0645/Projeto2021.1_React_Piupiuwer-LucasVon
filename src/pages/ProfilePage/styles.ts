@@ -187,10 +187,72 @@ export const FavoritePiusTitle = styled.h3`
     font-size: 3rem;
     letter-spacing: -0.02em;
     color: #FFFFFF;
-    margin-top: 16px;
+    margin-top: 32px;
     width: 90vw;
     margin-left: 5vw;
 
 `
 
+export const FollowerItemContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 16px;
 
+
+    p {
+        font-size: 2rem;
+        letter-spacing: -0.01em;
+        font-weight: bold;
+        font-style: normal;
+        color: #FFF;
+    }
+`
+
+export const FollowersListContainer = styled.div`
+    width: 90vw;
+    margin-left: 5vw;
+    display: flex;
+
+
+`
+
+export const ProfileImageFollowerContainer= styled.div`
+    height: 60px;
+    width: 60px;
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+    background-color: #BBB;
+    display: flex;
+    justify-content: center;
+    margin-right: 16px;
+
+    img {
+        height: 60px;
+        width: auto;
+    }
+
+    @media (min-width: 700px) {
+        width: 90px;
+        height: 90px;
+        border-radius: 45px;
+
+        img {
+        height: 90px;
+    }}
+
+
+    
+`
+export const FollowersTitle = styled.h3`
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3rem;
+    letter-spacing: -0.02em;
+    color: #FFFFFF;
+    margin-top: 32px;
+    width: 90vw;
+    margin-left: 5vw;
+
+`
