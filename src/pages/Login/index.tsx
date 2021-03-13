@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import Input from '../../components/Input';
 import * as S from './styles'
@@ -24,9 +24,10 @@ const Login: React.FC = () => {
    const history = useHistory();
    const {userData, login} = useAuth();
 
-   if (userData.user) {
-      history.push('/feed');
-   }
+   useEffect(() => 
+      {if (userData.user) {
+      history.push('/feed');}
+   }, []);
 
    const handleLogin = useCallback(async (event: FormEvent) => {
       event.preventDefault();

@@ -189,6 +189,7 @@ export const ButtonLogin = styled.button`
     text-transform: uppercase;
     margin-bottom: 20px;
     border: none;
+    cursor: pointer;
 
     :active {
         transform: translateY(0.16vw);
@@ -285,6 +286,7 @@ export const ButtonSignIn = styled.button`
     margin-top: 16px;
     margin-bottom: 24px;
     border: none;
+    cursor: pointer;
 
 
     :active {
