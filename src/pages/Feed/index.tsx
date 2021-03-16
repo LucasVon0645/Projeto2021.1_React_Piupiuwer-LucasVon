@@ -1,27 +1,33 @@
-import React, { useEffect, useState, useContext, useCallback} from 'react';
+/** Hooks */
+import React, { useEffect, useState, useCallback} from 'react';
+import useAuth from '../../hooks/useAuth'
+
+/**Components */
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import PostPiu from '../../components/PostPiu';
 import PublishPiu from '../../components/PublishPiu';
 
+
+/** Interfaces */
 import * as Interfaces from '../../interfaces/index'
 
-import {AuthContext} from '../../hooks/AuthProvider';
 
-
+/** Styled-components */
 import {FeedPageContainer, FeedContent, FeedHeader} from './styles'
+
+/** Services */
 import api from '../../services/api';
 
 const Feed: React.FC = () => {
 
 
-    const {userData} = useContext(AuthContext)
+    const {userData} = useAuth()
     const [menuMobileVisible, setMenuMobileVisible] = useState(false);
     const [menuWidth, setMenuWidth] = useState(0);
     const [arrayOfPius, setArrayOfPius] = useState([]);
     const {user, token} = userData;
 
-    console.log(user);
 
     const handleCreateAllPius = (PiusData: Interfaces.Piu[]) => {
         return PiusData.map( (piu) => {

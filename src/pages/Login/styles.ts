@@ -94,9 +94,11 @@ export const Title = styled.h2`
 
     }
 
-    @media (min-width: 1500px) {
-        font-size: 3.5rem;
-        margin-bottom: 1vh;
+    @media (min-width: 1500px)  {
+        @media (min-height: 750px) {
+            font-size: 3.5rem;
+            margin-bottom: 1vh;
+        }
     }
 
 
@@ -129,9 +131,10 @@ export const LoginCardTitle = styled.h3`
     margin-bottom: 16px;
 
     @media (min-width: 1500px) {
-        margin-top: 32px;
-        margin-bottom: 32px;
-        font-size: 4.2rem;
+        @media (min-height: 750px){
+            margin-top: 32px;
+            margin-bottom: 32px;
+            font-size: 4.2rem;}
     }
 `
 
@@ -220,7 +223,9 @@ export const AnotherAcountText = styled.p`
     }
 
     @media (min-width: 1500px) {
-        margin-top: 8px;
+        @media (min-height: 750px){
+        
+        margin-top: 8px;}
     }
 `
 
@@ -249,7 +254,8 @@ export const SignInForm = styled.form`
     margin-top: 16px;
 
     @media (min-width: 1500px) {
-        margin-top: 36px;
+        @media (min-height: 750px){
+        margin-top: 36px;}
     }
 `
 
@@ -266,7 +272,8 @@ export const SignInLabel = styled.label`
     }
 
     @media (min-width: 1500px) {
-        margin-bottom: 8px;
+        @media (min-height: 750px){
+        margin-bottom: 8px;}
     }
 `
 
@@ -302,7 +309,9 @@ export const ButtonSignIn = styled.button`
     }
 
     @media (min-width: 1500px) {
-        margin-bottom: 64px;
+        @media (min-height: 750px) {
+            margin-bottom: 64px;}
     }
+
 
 `

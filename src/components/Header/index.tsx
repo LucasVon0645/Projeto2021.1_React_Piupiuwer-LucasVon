@@ -1,13 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
+
+
+/** Hooks */
+import useAuth from '../../hooks/useAuth';
+import useWindownSize from '../../hooks/useWindowSize';
+
+/** Styled-Components */
 import * as S from './styles';
 import {Link} from 'react-router-dom';
 
-import useWindownSize from '../../hooks/useWindowSize'
-
+/** Images */
 import Logo from '../../assets/icons/logo.svg'
 import SearchIcon from '../../assets/icons/magnifier.svg'
 import LogOutIcon from '../../assets/icons/logout2.svg'
-import { AuthContext } from '../../hooks/AuthProvider';
 
 
 interface HeaderProps {
@@ -17,7 +22,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({toogleMenu,completeHeader}) => {
 
-    const {logout} = useContext(AuthContext);
+    const {logout} = useAuth();
     const {width} = useWindownSize();
 
 

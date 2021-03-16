@@ -1,19 +1,25 @@
-import React, { FormEvent, useCallback, useEffect, useState } from 'react';
+/** Hooks */
+import React, { FormEvent, useCallback, useState } from 'react';
+import useAuth from '../../hooks/useAuth';
+import useWindowSize from '../../hooks/useWindowSize';
+import { useHistory } from 'react-router';
+
+/** Components */
 import Header from '../../components/Header';
 import Input from '../../components/Input';
+
+/** Styled-components */
 import * as S from './styles'
 
+/** Images */
 import GoogleIcon from '../../assets/icons/google-plus.svg'
 import FacebookIcon from '../../assets/icons/facebook.svg'
 import PinterestIcon from '../../assets/icons/pinterest.svg'
 import FriendshipIcon from '../../assets/icons/amizade.svg'
 import TalkIcon from '../../assets/icons/conversando.svg'
-
 import LandingImage from '../../assets/images/LandingImage.svg';
 
-import { useHistory } from 'react-router';
-import useWindowSize from '../../hooks/useWindowSize';
-import useAuth from '../../hooks/useAuth';
+
 
 
 const Login: React.FC = () => {
@@ -22,25 +28,20 @@ const Login: React.FC = () => {
    const [loginFailed, setLoginFailed] = useState(false);
    const [password, setPassword] = useState("");
    const history = useHistory();
-   const {userData, login} = useAuth();
-
-   useEffect(() => 
-      {if (userData.user) {
-      history.push('/feed');}
-   }, []);
+   const {login} = useAuth();
 
    const handleLogin = useCallback(async (event: FormEvent) => {
       event.preventDefault();
       const result = await login({email, password});
-      if (result === 1) history.push('/feed');
+      if (result === 1) console.log('oi');
       else setLoginFailed(true);
-   }, [email, password, history, login]);
+   }, [email, password, login]);
 
    const {height} = useWindowSize();
 
    const goToRegisterPage = (event: FormEvent) => {
          event.preventDefault();
-         history.push('/Register');
+         history.push('/register');
    }
 
 

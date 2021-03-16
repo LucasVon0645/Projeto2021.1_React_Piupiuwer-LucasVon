@@ -1,5 +1,7 @@
+/** Hooks */
 import {useState, useEffect} from 'react';
 
+/** Interface */
 type WindowSize = () => {width: number, height: number}
 
 const useWindowSize: WindowSize = () => {
@@ -10,7 +12,7 @@ const useWindowSize: WindowSize = () => {
     })
 
 
-    function handleSize () {
+    function handleSize (){
         setSize({
             width: window.innerWidth,
             height: window.innerHeight
@@ -21,7 +23,7 @@ const useWindowSize: WindowSize = () => {
 
         handleSize();
         window.addEventListener('resize', handleSize);
-    }, [])
+    }, []);
     
     return size;
 }

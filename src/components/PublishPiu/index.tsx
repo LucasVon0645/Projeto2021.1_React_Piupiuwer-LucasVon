@@ -1,18 +1,23 @@
-import React, { FormEvent, useRef, useState, useContext } from 'react';
+/** Hooks */
+import React, { FormEvent, useRef, useState } from 'react';
+import useAuth from '../../hooks/useAuth'
+
+/** Styled-Components */
 import * as S from './styles'
 
+/** Images */
 import NoneUserImage from '../../assets/icons/user_none.svg';
-import BirdIcon from '../../assets/icons/passaro-cantando-com-notas-musicais.svg'
-import {AuthContext} from '../../hooks/AuthProvider';
-import api from '../../services/api';
+import BirdIcon from '../../assets/icons/passaro-cantando-com-notas-musicais.svg';
+import CleanIcon from '../../assets/icons/clean.svg';
 
-import CleanIcon from '../../assets/icons/clean.svg'
+/** Services */
+import api from '../../services/api';
 
 const PublishPiu: React.FC = () => {
 
    const TextAreaElement = useRef<HTMLTextAreaElement>(null);
 
-   const {userData} = useContext(AuthContext);
+   const {userData} = useAuth();
    const {user, token} = userData;
    const [numberOfChars, setNumberOfChars] = useState(0);
    const [emptyPost, setEmptyPost] = useState(false);
@@ -43,13 +48,13 @@ const PublishPiu: React.FC = () => {
 
     }
 
-    const handlePublishPiu = (event: FormEvent) => {
+    const handlePublishPiu = async (event: FormEvent) => {
         event.preventDefault();
         if (numberOfChars > 0) {
             if (numberOfChars < 141) {
-                PostMyPiu(message);}}
-        else setEmptyPost(true)
-
+                await PostMyPiu(message);
+                window.location.reload()}}
+        else setEmptyPost(true);
    }
    
    return (
@@ -81,4 +86,4 @@ const PublishPiu: React.FC = () => {
 
    );}
 
-export default PublishPiu
+export default PublishPiu;

@@ -1,6 +1,11 @@
-import React, { useCallback, useContext, useRef, useState } from 'react';
+/** Hooks */
+import React, { useCallback, useRef, useState } from 'react';
+import useAuth from '../../hooks/useAuth';
+
+/** Styled-Components */
 import * as S from './styles'
 
+/** Images */
 import NoneUserImage from '../../assets/icons/user_none.svg'
 import EditIcon from '../../assets/icons/editar.svg'
 import SaveIcon from '../../assets/icons/salvar.svg'
@@ -9,11 +14,15 @@ import LikeIcon from '../../assets/icons/like.svg'
 import LikedIcon from '../../assets/icons/liked.svg'
 import HighlightIcon from '../../assets/icons/highlight.svg'
 import HighlightedIcon from '../../assets/icons/star_highlighted.svg'
+
+/** Components */
 import { Piu } from '../../interfaces';
-import { AuthContext } from '../../hooks/AuthProvider';
-import api from '../../services/api';
 import { Link } from 'react-router-dom';
 
+/**S ervices */
+import api from '../../services/api';
+
+/** Interfaces */
 interface PostPiuProps {
     myPost: boolean;
     piuInformation: Piu;
@@ -23,12 +32,11 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
 
     const [editableModeOn, setEditableModeOn] = useState(false);
 
-    console.log('Renderizou Piu');
 
     const name = piuInformation.user.first_name + " " + piuInformation.user.last_name;
     const username = piuInformation.user.username;
 
-    const {userData, updateUser} = useContext(AuthContext)
+    const {userData, updateUser} = useAuth();
     const {token} = userData;
 
     const piu_id = piuInformation.id;
@@ -50,9 +58,7 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
 
     const handleLikePiu = useCallback(async () => {
 
-        const response = await api.post('/pius/like', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
-        console.log(response);
-        console.log(response);
+        await api.post('/pius/like', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
         if (liked)
             NumberOfLikes.current -= 1;
         else
@@ -78,15 +84,11 @@ const PostPiu: React.FC<PostPiuProps> = ({myPost, piuInformation}) => {
         console.log("renderiou handleCheck");
         if (!CheckIfFavoriteOn()) {
 
-            console.log(token);
-            console.log(piu_id);
             await api.post('/pius/favorite', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
-            console.log("favoritou");
         }
 
         else {
 
-            console.log("desfavoritou");
             await api.post('/pius/unfavorite', {piu_id}, {headers: { Authorization: `Bearer ${token}` }});
         }
         updateUser();

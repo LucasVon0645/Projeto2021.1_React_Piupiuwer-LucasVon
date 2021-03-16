@@ -95,8 +95,6 @@ export const RegisterCardTitle = styled.h3`
     margin-top: 16px;
 
     @media (min-width: 1500px) {
-        margin-top: 32px;
-        margin-bottom: 32px;
         font-size: 4.2rem;
     }
 `
@@ -160,6 +158,7 @@ export const ButtonSignIn = styled.button`
     margin-top: 16px;
     margin-bottom: 24px;
     border: none;
+    cursor: pointer;
 
 
     :active {

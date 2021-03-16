@@ -1,6 +1,11 @@
+/** Hooks */
 import { createContext, useCallback, useState} from "react";
-import * as Interfaces from '../interfaces/index'
+
+/** Services */
 import api from "../services/api";
+
+/** Interfaces */
+import * as Interfaces from '../interfaces/index'
 
 interface AuthState {
     user: Interfaces.User,
@@ -69,10 +74,8 @@ const AuthProvider: React.FC = ({children}) => {
         const token = userData.token;
         const username = userData.user.username
         const response = await api.get('/users?username=' + username, {headers: { Authorization: `Bearer ${token}` }})
-        console.log(response);
         const user: Interfaces.User = response.data[0]
         localStorage.setItem('@Project:user', JSON.stringify(user));
-        console.log("atualizou");
         setUserData({token, user});
     }
 

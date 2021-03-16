@@ -1,5 +1,5 @@
 import AuthProvider from './hooks/AuthProvider';
-import Routes from './routes/routes';
+import Route from './routes/index';
 import GlobalStyle from './styles/global';
 
 
@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <AuthProvider>
         <GlobalStyle />
-        <Routes/>
+        <Route/>
       </AuthProvider>
     </div>
   );

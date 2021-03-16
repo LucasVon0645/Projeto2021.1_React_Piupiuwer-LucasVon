@@ -1,26 +1,33 @@
-import React, { useContext } from 'react';
+import React from 'react';
+
+/** Hooks */
+import useAuth from '../../hooks/useAuth'
+
+/** Styled-Components */
 import {MenuContainer, ProfileMenuContainer, ProfileImageMenu, 
 ProfileInfoMenu, ProfileNameLinkMenu, ProfileLinkMenu, MenuItemsContainer,
 MenuItem, MenuItemText} from './styles'
 
+/** Images */
 import NoneUserImage from '../../assets/icons/user_none.svg'
 import HomeIcon from './../../assets/icons/botao-home.svg';
 import LogOutIcon from './../../assets/icons/logout.svg';
 import FriendsIcon from './../../assets/icons/amigos.svg';
-import PasswordIcon from './../../assets/icons/padlock.svg'
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../hooks/AuthProvider';
+import PasswordIcon from './../../assets/icons/padlock.svg';
 
+/** Components */
+import { Link } from 'react-router-dom';
+
+/** Interfaces */
 interface MenuProps {
     width: number;
 }
 
 const Menu: React.FC<MenuProps> = ({width}) => {
 
-    const {userData, logout} = useContext(AuthContext);
+    const {userData, logout} = useAuth();
     const {user} = userData;
 
-    console.log('Foto', user.photo)
    return (
     <MenuContainer width={width}>
 

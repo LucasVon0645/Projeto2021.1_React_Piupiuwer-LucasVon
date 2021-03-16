@@ -1,23 +1,34 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+/** Hooks */
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router';
+import useAuth from '../../hooks/useAuth';
+
+/** Components */
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import PostPiu from '../../components/PostPiu';
-import { AuthContext } from '../../hooks/AuthProvider';
-import * as S from './styles'
+
+/** Styled-Components */
+import * as S from './styles';
+
+/** Interfaces */
 import * as Interfaces from '../../interfaces/index';
-import { useLocation } from 'react-router';
+
+/** Services */
 import api from '../../services/api';
 
+/** Images */
+import NoneUserImage from '../../assets/icons/user_none.svg';
+import FollowinfIcon from '../../assets/icons/followers.svg';
 
-import NoneUserImage from '../../assets/icons/user_none.svg'
-import FollowinfIcon from '../../assets/icons/followers.svg'
+/** Utils */
 import { Link } from 'react-router-dom';
 
 
 const Profile: React.FC = () => {
 
 
-    const {userData, updateUser} = useContext(AuthContext);
+    const {userData, updateUser} = useAuth();
 
     const [menuMobileVisible, setMenuMobileVisible] = useState(false);
     const [menuWidth, setMenuWidth] = useState(0);
